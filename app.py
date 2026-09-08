@@ -1,4 +1,9 @@
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
+
 from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,7 +31,7 @@ def create_app():
             result = sock.connect_ex(('127.0.0.1', 5432))
             sock.close()
             if result == 0:
-                db_url = 'postgresql://postgres:admin123@localhost:5432/OMC'
+                db_url = 'postgresql://postgres:admin123@localhost:5432/megacel'
             else:
                 instance_path = os.path.join(app.root_path, 'instance')
                 os.makedirs(instance_path, exist_ok=True)
@@ -281,15 +286,15 @@ if __name__ == '__main__':
         # Crear la carpeta de imágenes si no existe
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
         
-        if not User.query.filter_by(email='admin@omc.com').first() and not User.query.filter_by(email='admin@puntocel.com').first() and not User.query.filter_by(email='admin@ultratech.com').first():
+        if not User.query.filter_by(email='admin@megacel.com').first():
             master_admin = User(
                 nombre='Administrador Principal',
-                email='admin@omc.com',
+                email='admin@megacel.com',
                 password_hash=generate_password_hash('Admin123'),
                 rol='admin'
             )
             db.session.add(master_admin)
             db.session.commit()
-            print("[INFO] Usuario maestro 'admin@omc.com' fue creado automaticamente.")
+            print("[INFO] Usuario maestro 'admin@megacel.com' fue creado automaticamente.")
             
     app.run(debug=True)
