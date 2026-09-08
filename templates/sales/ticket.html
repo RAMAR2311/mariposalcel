@@ -637,7 +637,7 @@ Soporte: ventas@megacel.com`;
         
         // Si está en la app instalada (PWA standalone) o no tiene ventana padre que la abrió
         if (isStandalone) {
-            window.location.href = "{{ url_for('sales.caja_visual') }}";
+            window.location.href = "{{ url_for('sales_bp.caja_visual') }}";
             return;
         }
 
@@ -646,12 +646,12 @@ Soporte: ventas@megacel.com`;
             window.close();
             // Si por política del navegador no se pudo cerrar:
             setTimeout(() => {
-                window.location.href = "{{ url_for('sales.caja_visual') }}";
+                window.location.href = "{{ url_for('sales_bp.caja_visual') }}";
             }, 300);
         } else if (window.history.length > 1) {
             window.history.back();
         } else {
-            window.location.href = "{{ url_for('sales.caja_visual') }}";
+            window.location.href = "{{ url_for('sales_bp.caja_visual') }}";
         }
     }
 </script>
