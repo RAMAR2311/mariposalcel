@@ -1,14 +1,14 @@
 {
     "id": "/",
-    "name": "OMC - CRM & POS",
-    "short_name": "OMC",
-    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas OMC Accesorios",
+    "name": "Megacel - CRM & POS",
+    "short_name": "Megacel",
+    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas Megacel - Accesorios para Celulares",
     "start_url": "/?source=pwa",
     "scope": "/",
     "display": "standalone",
     "orientation": "any",
     "background_color": "#FFFFFF",
-    "theme_color": "#007BFF",
+    "theme_color": "#6B1788",
     "categories": [
         "business",
         "finance",
