@@ -18,7 +18,7 @@ def create_app():
     
     # Configuración mediante variables de entorno
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-super-secreta')
-    app.config['VALOR_MENSUALIDAD_SERVIDOR'] = os.environ.get('VALOR_MENSUALIDAD_SERVIDOR', '60.000')
+    app.config['VALOR_MENSUALIDAD_SERVIDOR'] = os.environ.get('VALOR_MENSUALIDAD_SERVIDOR', '80.000')
     app.config['PIN_CONFIRMACION_SERVIDOR'] = os.environ.get('PIN_CONFIRMACION_SERVIDOR', '9876')
     
     # Detección inteligente de Base de Datos (PostgreSQL con Fallback automático a SQLite local)
@@ -110,7 +110,7 @@ def create_app():
             mes_actual = ahora.month
             dia_actual = ahora.day
 
-            monto = app.config.get('VALOR_MENSUALIDAD_SERVIDOR', '60.000')
+            monto = app.config.get('VALOR_MENSUALIDAD_SERVIDOR', '80.000')
             dia_vencimiento = 15
             dia_preventivo = 8  # Aviso preventivo 7 días antes (del 8 al 14)
 
@@ -223,7 +223,7 @@ def create_app():
                 'mes_nombre': 'Actual',
                 'anio': ahora_fallback.year,
                 'dia_vencimiento': dia_venc_fallback,
-                'monto': '60.000',
+                'monto': '80.000',
                 'dias_restantes': 0,
                 'dias_gabela': 0,
                 'whatsapp_url': '#',
@@ -269,6 +269,23 @@ def create_app():
     def offline():
         from flask import render_template
         return render_template('offline.html')
+
+    @app.route('/favicon.ico')
+    def favicon():
+        from flask import send_from_directory, make_response
+        resp = make_response(send_from_directory('static', 'favicon.ico', mimetype='image/vnd.microsoft.icon'))
+        resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+        return resp
+
+    @app.route('/apple-touch-icon.png')
+    @app.route('/apple-touch-icon-precomposed.png')
+    def apple_touch_icon():
+        from flask import send_from_directory, make_response
+        resp = make_response(send_from_directory(os.path.join('static', 'img', 'icons'), 'apple-touch-icon.png', mimetype='image/png'))
+        resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+        return resp
 
     return app
 
