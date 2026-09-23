@@ -1,5 +1,136 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+<style>
+    /* Estilos Premium para Tarjetas KPI del Dashboard (Gold Glow & Shimmer) */
+    .kpi-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(150deg, #FFFFFF 0%, #FAFAFC 60%, #FFFDF6 100%);
+        border: 1.5px solid rgba(229, 231, 235, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .kpi-card-gold {
+        border-color: rgba(212, 175, 55, 0.38) !important;
+        background: linear-gradient(150deg, #FFFFFF 0%, #FFFEFA 50%, #FFF9E9 100%) !important;
+    }
+    
+    /* Destello de luz ambiental en la esquina */
+    .kpi-card-gold::before {
+        content: '';
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 130px;
+        height: 130px;
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, rgba(243, 208, 121, 0.08) 50%, transparent 75%);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Animación de Destello Shimmer Dorado */
+    .kpi-shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150%;
+        width: 80%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.15) 50%, transparent 100%);
+        transform: skewX(-25deg);
+        animation: kpiShimmerMove 6s infinite ease-in-out;
+        pointer-events: none;
+        z-index: 2;
+    }
+    
+    @keyframes kpiShimmerMove {
+        0% { left: -150%; }
+        25% { left: 160%; }
+        100% { left: 160%; }
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 28px -4px rgba(212, 175, 55, 0.22), 0 4px 14px rgba(0, 0, 0, 0.05);
+        border-color: #D4AF37 !important;
+    }
+
+    /* Cajas de Iconos Superiores */
+    .kpi-icon-box {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+        position: relative;
+        z-index: 3;
+    }
+    .kpi-card:hover .kpi-icon-box {
+        transform: scale(1.1);
+    }
+    
+    .kpi-icon-gold {
+        background: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%);
+        color: #111827;
+        box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+    }
+    .kpi-icon-dark {
+        background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+        color: #D4AF37;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .kpi-icon-danger {
+        background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+        color: #DC2626;
+        border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+    .kpi-icon-success {
+        background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+        color: #059669;
+        border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+
+    /* Badges de Periodo */
+    .kpi-badge-gold {
+        background: rgba(212, 175, 55, 0.12);
+        color: #926C09;
+        border: 1px solid rgba(212, 175, 55, 0.35);
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+    }
+    .kpi-badge-dark {
+        background: #1F2937;
+        color: #F9FAFB;
+        font-weight: 700;
+        font-size: 0.72rem;
+    }
+
+    /* Contenedor de detalles secundarios */
+    .kpi-details-box {
+        background: rgba(248, 250, 252, 0.85);
+        border-radius: 10px;
+        padding: 0.45rem 0.65rem;
+        border: 1px solid #EEF2F6;
+    }
+
+    /* Cifras Grandes */
+    .kpi-main-number {
+        font-family: var(--font-heading);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Cabecera y Barra de Filtros -->
 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
@@ -128,27 +259,33 @@
   </div>
 </div>
 
-<!-- FILA 1: Métricas Principales Dinámicas del Periodo (4 Tarjetas) -->
+<!-- FILA 1: Métricas Principales Dinámicas del Periodo (4 Tarjetas con Destello Dorado) -->
 <div class="row g-3 mb-4">
-    <!-- 1. Tarjeta: Ingresos Totales del Periodo -->
+    <!-- 1. Tarjeta: Ingresos Totales del Periodo (Destello Shimmer Dorado) -->
     <div class="col-md-3">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-sack-dollar fs-1" style="color: var(--brand-blue);"></i>
-                <span class="badge bg-brand-blue rounded-pill">{{ badge_periodo }}</span>
+        <div class="kpi-card kpi-card-gold kpi-shimmer h-100 p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box kpi-icon-gold">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <span class="badge kpi-badge-gold rounded-pill px-3 py-1">
+                    <i class="fa-solid fa-sparkles me-1 text-warning"></i>{{ badge_periodo }}
+                </span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Ingresos ({{ tipo_periodo_nombre }})</h6>
-            <h2 class="fw-bolder mb-1" style="color: var(--brand-blue);">${{ (total_ventas)|cop }}</h2>
-            <p class="text-muted small mb-2"><i class="fa-solid fa-receipt me-1"></i> {{ conteo_ventas }} ventas realizadas</p>
             
-            <div class="d-flex justify-content-between text-muted small pt-2 border-top mb-3">
-                <span title="Efectivo en caja"><i class="fa-solid fa-money-bill-wave text-success me-1"></i>${{ (ventas_efectivo)|cop }}</span>
-                <span title="Canales digitales (Nequi, Bancolombia, Daviplata, Bolt)"><i class="fa-solid fa-network-wired text-primary me-1"></i>${{ (ventas_transferencia)|cop }}</span>
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Ingresos ({{ tipo_periodo_nombre }})</h6>
+            <h2 class="kpi-main-number mb-1 text-dark">${{ (total_ventas)|cop }}</h2>
+            <p class="text-muted small mb-3"><i class="fa-solid fa-receipt me-1 text-primary"></i> <strong>{{ conteo_ventas }}</strong> ventas realizadas</p>
+            
+            <div class="kpi-details-box d-flex justify-content-between text-muted small mb-3">
+                <span title="Efectivo en caja"><i class="fa-solid fa-money-bill-wave text-success me-1"></i><strong>${{ (ventas_efectivo)|cop }}</strong></span>
+                <span title="Canales digitales (Nequi, Bancolombia, etc.)"><i class="fa-solid fa-network-wired text-primary me-1"></i><strong>${{ (ventas_transferencia)|cop }}</strong></span>
             </div>
 
             <div class="mt-auto">
-                <a href="{{ url_for('sales_bp.historial') }}" class="btn btn-blue w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-file-invoice-dollar me-2"></i>Ver Historial
+                <a href="{{ url_for('sales_bp.historial') }}" class="btn btn-pink w-100 rounded-pill py-2 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Ver Historial</span>
                 </a>
             </div>
         </div>
@@ -156,22 +293,26 @@
 
     <!-- 2. Tarjeta: Unidades Vendidas en el Periodo -->
     <div class="col-md-3">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-cubes fs-1" style="color: var(--brand-blue);"></i>
-                <span class="badge bg-brand-blue rounded-pill">{{ badge_periodo }}</span>
+        <div class="kpi-card kpi-card-gold h-100 p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box kpi-icon-dark">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <span class="badge kpi-badge-dark rounded-pill px-3 py-1">{{ badge_periodo }}</span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Mercancía Vendida</h6>
-            <h2 class="fw-bolder mb-1" style="color: var(--brand-blue);">{{ unidades_vendidas }} uds.</h2>
-            <p class="text-muted small mb-2"><i class="fa-solid fa-tag me-1"></i> {{ referencias_vendidas }} referencias vendidas</p>
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Mercancía Vendida</h6>
+            <h2 class="kpi-main-number mb-1 text-dark">{{ unidades_vendidas }} <span class="fs-5 fw-bold text-muted">uds.</span></h2>
+            <p class="text-muted small mb-3"><i class="fa-solid fa-tag me-1 text-warning"></i> <strong>{{ referencias_vendidas }}</strong> referencias vendidas</p>
 
-            <div class="text-muted small pt-2 border-top mb-3">
-                <i class="fa-solid fa-boxes-stacked me-1"></i> Total en catálogo: <strong>{{ total_productos }}</strong> referencias
+            <div class="kpi-details-box text-muted small mb-3">
+                <i class="fa-solid fa-boxes-stacked text-primary me-1"></i> Total en catálogo: <strong>{{ total_productos }}</strong> referencias
             </div>
 
             <div class="mt-auto">
-                <a href="/inventory/" class="btn btn-blue w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-sliders me-2"></i>Gestionar Inventario
+                <a href="/inventory/" class="btn btn-dark-graphite w-100 rounded-pill py-2 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Gestionar Inventario</span>
                 </a>
             </div>
         </div>
@@ -179,51 +320,59 @@
 
     <!-- 3. Tarjeta: Gastos Operativos del Periodo -->
     <div class="col-md-3">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-file-invoice-dollar fs-1 text-danger"></i>
-                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill">{{ badge_periodo }}</span>
+        <div class="kpi-card h-100 p-4 d-flex flex-column" style="border-color: rgba(239, 68, 68, 0.25);">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box kpi-icon-danger">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-1 fw-bold">{{ badge_periodo }}</span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Gastos ({{ tipo_periodo_nombre }})</h6>
-            <h2 class="fw-bolder mb-1 text-danger">${{ (total_gastos)|cop }}</h2>
-            <p class="text-muted small mb-2"><i class="fa-solid fa-arrow-trend-down me-1 text-danger"></i> {{ conteo_gastos }} gastos registrados</p>
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Gastos ({{ tipo_periodo_nombre }})</h6>
+            <h2 class="kpi-main-number mb-1 text-danger">${{ (total_gastos)|cop }}</h2>
+            <p class="text-muted small mb-3"><i class="fa-solid fa-arrow-trend-down me-1 text-danger"></i> <strong>{{ conteo_gastos }}</strong> gastos registrados</p>
 
-            <div class="d-flex justify-content-between text-muted small pt-2 border-top mb-3">
-                <span>Diarios: ${{ (gastos_diarios)|cop }}</span>
-                <span>Indirectos: ${{ (costos_indirectos)|cop }}</span>
+            <div class="kpi-details-box d-flex justify-content-between text-muted small mb-3">
+                <span>Diarios: <strong>${{ (gastos_diarios)|cop }}</strong></span>
+                <span>Indirectos: <strong>${{ (costos_indirectos)|cop }}</strong></span>
             </div>
 
             <div class="mt-auto">
-                <a href="/gastos/" class="btn btn-outline-danger w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-hand-holding-dollar me-2"></i>Ver Gastos
+                <a href="/gastos/" class="btn btn-outline-danger w-100 rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <span>Ver Gastos</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- 4. Tarjeta: Utilidad Estimada del Periodo -->
+    <!-- 4. Tarjeta: Utilidad Estimada del Periodo (Destello Shimmer Dorado/Verde) -->
     <div class="col-md-3">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-chart-line fs-1 {% if utilidad_neta >= 0 %}text-success{% else %}text-danger{% endif %}"></i>
-                <span class="badge {% if utilidad_neta >= 0 %}bg-success bg-opacity-10 text-success{% else %}bg-danger bg-opacity-10 text-danger{% endif %} rounded-pill">
+        <div class="kpi-card {% if utilidad_neta >= 0 %}kpi-card-gold kpi-shimmer{% endif %} h-100 p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box {% if utilidad_neta >= 0 %}kpi-icon-success{% else %}kpi-icon-danger{% endif %}">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <span class="badge {% if utilidad_neta >= 0 %}kpi-badge-gold{% else %}bg-danger bg-opacity-10 text-danger{% endif %} rounded-pill px-3 py-1">
                     {{ badge_periodo }}
                 </span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Utilidad Estimada</h6>
-            <h2 class="fw-bolder mb-1 {% if utilidad_neta >= 0 %}text-success{% else %}text-danger{% endif %}">
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Utilidad Estimada</h6>
+            <h2 class="kpi-main-number mb-1 {% if utilidad_neta >= 0 %}text-success{% else %}text-danger{% endif %}">
                 {% if utilidad_neta >= 0 %}${{ (utilidad_neta)|cop }}{% else %}-${{ (-utilidad_neta)|cop }}{% endif %}
             </h2>
-            <p class="text-muted small mb-2"><i class="fa-solid fa-calculator me-1"></i> Ventas - Costos - Gastos</p>
+            <p class="text-muted small mb-3"><i class="fa-solid fa-calculator me-1 text-success"></i> Ventas - Costos - Gastos</p>
 
-            <div class="d-flex justify-content-between text-muted small pt-2 border-top mb-3">
+            <div class="kpi-details-box d-flex justify-content-between text-muted small mb-3">
                 <span>Costo Directo (COGS):</span>
-                <strong>${{ (costos_directos)|cop }}</strong>
+                <strong class="text-dark">${{ (costos_directos)|cop }}</strong>
             </div>
 
             <div class="mt-auto">
-                <button type="button" class="btn btn-outline-secondary w-100 rounded-pill py-2" data-bs-toggle="modal" data-bs-target="#modalBalance">
-                    <i class="fa-solid fa-scale-balanced me-2"></i>Reporte Detallado
+                <button type="button" class="btn btn-outline-brand w-100 rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#modalBalance">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Reporte Detallado</span>
                 </button>
             </div>
         </div>
@@ -236,22 +385,26 @@
 <div class="row g-3">
     <!-- 5. Tarjeta: Alertas de Stock -->
     <div class="col-lg-4 col-md-6">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-triangle-exclamation fs-1 text-warning"></i>
-                <span class="badge bg-warning bg-opacity-25 text-dark rounded-pill">Stock Crítico</span>
+        <div class="kpi-card h-100 p-4 d-flex flex-column" style="border-color: rgba(245, 158, 11, 0.3);">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box" style="background: rgba(245, 158, 11, 0.15); color: #D97706;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <span class="badge bg-warning bg-opacity-20 text-warning-emphasis fw-bold rounded-pill px-3 py-1">Stock Crítico</span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Alertas de Stock</h6>
-            <h2 class="fw-bolder mb-1 text-warning">{{ productos_bajo_stock }} productos</h2>
-            <p class="text-muted small mb-2">Tienen existencias limitadas (10 o menos unidades).</p>
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Alertas de Stock</h6>
+            <h2 class="kpi-main-number mb-1 text-warning-emphasis">{{ productos_bajo_stock }} <span class="fs-5 fw-bold text-muted">productos</span></h2>
+            <p class="text-muted small mb-3">Tienen existencias limitadas (10 o menos unidades).</p>
 
-            <div class="text-muted small pt-2 border-top mb-3">
-                <i class="fa-solid fa-sliders me-1"></i> {{ ajustes_periodo }} ajustes de inventario registrados en el periodo
+            <div class="kpi-details-box text-muted small mb-3">
+                <i class="fa-solid fa-sliders text-warning me-1"></i> {{ ajustes_periodo }} ajustes de inventario en el periodo
             </div>
 
             <div class="mt-auto">
-                <a href="/inventory/" class="btn btn-blue w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-eye me-2"></i>Revisar Urgencias
+                <a href="/inventory/" class="btn btn-dark-graphite w-100 rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-eye"></i>
+                    <span>Revisar Urgencias</span>
                 </a>
             </div>
         </div>
@@ -259,24 +412,28 @@
 
     <!-- 6. Tarjeta: Gestión de Proveedores -->
     <div class="col-lg-4 col-md-6">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm" style="border-left: 4px solid var(--brand-blue) !important;">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-truck-field fs-1 text-secondary"></i>
-                <span class="badge bg-brand-blue rounded-pill">{{ badge_periodo }}</span>
+        <div class="kpi-card h-100 p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box" style="background: rgba(139, 92, 246, 0.14); color: #7C3AED;">
+                    <i class="fa-solid fa-truck-field"></i>
+                </div>
+                <span class="badge kpi-badge-dark rounded-pill px-3 py-1">{{ badge_periodo }}</span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Abonos a Proveedores</h6>
-            <h2 class="fw-bolder mb-1 text-brand-black">${{ (pagos_proveedores_periodo)|cop }}</h2>
-            <p class="text-muted small mb-2">
-                <i class="fa-solid fa-receipt me-1"></i> {{ conteo_pagos_prov }} abonos pagados a proveedores en el periodo
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Abonos a Proveedores</h6>
+            <h2 class="kpi-main-number mb-1 text-dark">${{ (pagos_proveedores_periodo)|cop }}</h2>
+            <p class="text-muted small mb-3">
+                <i class="fa-solid fa-receipt me-1 text-purple" style="color: #7C3AED;"></i> <strong>{{ conteo_pagos_prov }}</strong> abonos pagados en el periodo
             </p>
 
-            <div class="text-muted small pt-2 border-top mb-3">
-                <i class="fa-solid fa-folder-open me-1"></i> Cuentas por pagar, compras y abonos
+            <div class="kpi-details-box text-muted small mb-3">
+                <i class="fa-solid fa-folder-open me-1 text-purple" style="color: #7C3AED;"></i> Cuentas por pagar, compras y abonos
             </div>
 
             <div class="mt-auto">
-                <a href="/proveedores" class="btn btn-blue w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-folder-open me-2"></i>Abrir Proveedores
+                <a href="/proveedores" class="btn btn-dark-graphite w-100 rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Abrir Proveedores</span>
                 </a>
             </div>
         </div>
@@ -284,24 +441,28 @@
 
     <!-- 7. Tarjeta: Historial de Aprobaciones de Precios -->
     <div class="col-lg-4 col-md-6">
-        <div class="card card-custom h-100 p-4 border-0 shadow-sm" style="border-left: 4px solid var(--brand-pink) !important;">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <i class="fa-solid fa-stamp fs-1" style="color: var(--brand-pink);"></i>
-                <span class="badge bg-brand-blue rounded-pill">{{ badge_periodo }}</span>
+        <div class="kpi-card h-100 p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div class="kpi-icon-box" style="background: rgba(236, 72, 153, 0.14); color: #DB2777;">
+                    <i class="fa-solid fa-stamp"></i>
+                </div>
+                <span class="badge kpi-badge-dark rounded-pill px-3 py-1">{{ badge_periodo }}</span>
             </div>
-            <h6 class="text-muted fw-bold mb-1">Aprobaciones de Precios</h6>
-            <h2 class="fw-bolder mb-1" style="color: var(--brand-pink);">{{ total_aprobaciones_periodo }} solicitudes</h2>
-            <p class="text-muted small mb-2">
-                <i class="fa-solid fa-circle-check text-success me-1"></i> {{ aprobadas_periodo }} autorizadas en el periodo
+            
+            <h6 class="text-muted fw-bold mb-1" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px;">Aprobaciones de Precios</h6>
+            <h2 class="kpi-main-number mb-1 text-dark">{{ total_aprobaciones_periodo }} <span class="fs-5 fw-bold text-muted">solicitudes</span></h2>
+            <p class="text-muted small mb-3">
+                <i class="fa-solid fa-circle-check text-success me-1"></i> <strong>{{ aprobadas_periodo }}</strong> autorizadas en el periodo
             </p>
 
-            <div class="text-muted small pt-2 border-top mb-3">
+            <div class="kpi-details-box text-muted small mb-3">
                 <span class="badge bg-warning text-dark me-1">{{ pendientes_activas }}</span> pendientes en tiempo real
             </div>
 
             <div class="mt-auto">
-                <a href="{{ url_for('admin_bp.aprobaciones') }}" class="btn btn-blue w-100 rounded-pill py-2">
-                    <i class="fa-solid fa-clock-rotate-left me-2"></i>Ver Historial
+                <a href="{{ url_for('admin_bp.aprobaciones') }}" class="btn btn-dark-graphite w-100 rounded-pill py-2 fw-bold d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Ver Historial</span>
                 </a>
             </div>
         </div>

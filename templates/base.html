@@ -256,55 +256,232 @@
             font-weight: 600;
         }
 
-        /* Sidebar Offcanvas Estilos (Clean Light Mode Mariposacel) */
+        /* Sidebar Offcanvas Estilos Premium (Mariposacel Tech Luxury Theme) */
         .offcanvas {
-            background-color: #FFFFFF !important;
-            color: var(--brand-text) !important;
-            border-right: 1px solid var(--brand-border) !important;
-            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.05) !important;
-        }
-        .offcanvas-header {
             background: #FFFFFF !important;
-            border-bottom: 1px solid var(--brand-border) !important;
-            padding: 1rem 1.25rem;
+            color: var(--brand-text) !important;
+            border-right: 1px solid rgba(229, 231, 235, 0.8) !important;
+            box-shadow: 10px 0 35px rgba(0, 0, 0, 0.08) !important;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
-        .offcanvas-title {
-            color: #111827 !important;
-            font-family: var(--font-heading);
+        .sidebar-header-card {
+            background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+            padding: 1.25rem 1.25rem 1rem 1.25rem;
+            position: relative;
+            overflow: hidden;
+            border-top-right-radius: 20px;
+        }
+        .sidebar-header-card::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .sidebar-avatar-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111827;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+            flex-shrink: 0;
         }
-        .offcanvas-header .btn-close {
-            filter: none;
+        .sidebar-close-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #F3F4F6;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
-        .offcanvas-body .nav-link {
-            color: #374151 !important;
-            transition: all 0.2s ease-in-out;
-            font-weight: 500;
-            font-family: var(--font-body);
+        .sidebar-close-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #FFFFFF;
+            transform: rotate(90deg);
         }
-        .offcanvas-body .nav-link i,
-        .offcanvas-body .nav-link .fa-solid {
-            color: var(--brand-primary) !important;
-            transition: transform 0.2s ease-in-out;
+        
+        /* Categorías y Títulos de Sección */
+        .sidebar-category-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #9CA3AF;
+            margin: 0.85rem 0.5rem 0.35rem 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .offcanvas-body .nav-link:hover,
-        .offcanvas-body .nav-link.active {
-            background-color: rgba(212, 175, 55, 0.08) !important;
+        .sidebar-category-label::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #F3F4F6;
+        }
+
+        /* Enlaces de Navegación Estilizados como Tarjetas */
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.65rem 0.85rem;
+            margin-bottom: 0.35rem;
+            border-radius: 12px;
+            color: #1F2937 !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            background: #FFFFFF;
+            border: 1px solid #F1F5F9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .sidebar-nav-item:hover {
+            background: #FFFFFF !important;
+            border-color: rgba(212, 175, 55, 0.4) !important;
+            color: #111827 !important;
             transform: translateX(4px);
-            border-left: 4px solid var(--brand-primary) !important;
-            color: #B89028 !important;
+            box-shadow: 0 5px 14px rgba(212, 175, 55, 0.12) !important;
         }
-        .offcanvas-body .nav-link:hover i,
-        .offcanvas-body .nav-link:hover .fa-solid,
-        .offcanvas-body .nav-link.active i,
-        .offcanvas-body .nav-link.active .fa-solid {
-            color: var(--brand-primary) !important;
-            transform: scale(1.15);
+        .sidebar-nav-item.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(243, 208, 121, 0.05) 100%) !important;
+            border-color: #D4AF37 !important;
+            color: #926C09 !important;
+            font-weight: 700;
         }
-        .offcanvas-body .border-bottom { border-bottom-color: var(--brand-border) !important; }
-        .offcanvas-body .bg-light { background-color: #F9FAFB !important; border-color: var(--brand-border) !important; color: var(--brand-text) !important; }
-        .offcanvas-body .text-muted { color: var(--brand-text-muted) !important; }
+        
+        /* Cajas de Iconos con Colores Vivos */
+        .sidebar-icon-box {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .sidebar-nav-item:hover .sidebar-icon-box {
+            transform: scale(1.1);
+        }
+        .icon-box-gold { background: rgba(212, 175, 55, 0.14); color: #B89028; }
+        .icon-box-indigo { background: rgba(99, 102, 241, 0.14); color: #4F46E5; }
+        .icon-box-emerald { background: rgba(16, 185, 129, 0.14); color: #059669; }
+        .icon-box-amber { background: rgba(245, 158, 11, 0.14); color: #D97706; }
+        .icon-box-sky { background: rgba(14, 165, 233, 0.14); color: #0284C7; }
+        .icon-box-purple { background: rgba(139, 92, 246, 0.14); color: #7C3AED; }
+        .icon-box-rose { background: rgba(244, 63, 94, 0.14); color: #E11D48; }
+        .icon-box-pink { background: rgba(236, 72, 153, 0.14); color: #DB2777; }
+        .icon-box-teal { background: rgba(20, 184, 166, 0.14); color: #0D9488; }
+
+        /* Tarjeta Destacada para Arqueo de Caja */
+        .sidebar-nav-highlight {
+            background: linear-gradient(135deg, #FFFDF7 0%, #FFF8E6 100%) !important;
+            border: 1.5px solid rgba(212, 175, 55, 0.45) !important;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15) !important;
+        }
+        .sidebar-nav-highlight:hover {
+            border-color: #D4AF37 !important;
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25) !important;
+        }
+
+        /* Submenú desplegable estilizado */
+        .sidebar-submenu-box {
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 0.4rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #EEF2F6;
+        }
+        .sidebar-sub-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            color: #4B5563;
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.18s ease;
+        }
+        .sidebar-sub-item:hover {
+            background: #FFFFFF;
+            color: #111827;
+            transform: translateX(3px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+        .sidebar-sub-item i {
+            font-size: 0.8rem;
+            margin-right: 0.6rem;
+        }
+        
+        .chevron-toggle {
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #9CA3AF;
+        }
+        [aria-expanded="true"] .chevron-toggle {
+            transform: rotate(180deg);
+            color: #D4AF37;
+        }
+
+        /* Botón PWA Tech */
+        .btn-sidebar-pwa {
+            background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+            border: 1.5px solid #F59E0B;
+            color: #B45309;
+            font-weight: 700;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+            transition: all 0.2s ease;
+        }
+        .btn-sidebar-pwa:hover {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            color: #92400E;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.25);
+        }
+
+        /* Botón Salir Elegante */
+        .btn-sidebar-logout {
+            background: #FFF5F5;
+            border: 1px solid #FECACA;
+            color: #DC2626;
+            font-weight: 700;
+            padding: 0.65rem 1rem;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-sidebar-logout:hover {
+            background: #DC2626;
+            border-color: #DC2626;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.25);
+        }
 
         /* Reglas EXCLUSIVAS para móviles (<768px): el computador permanece 100% intacto */
         @media (max-width: 767.98px) {
@@ -392,97 +569,187 @@
 
 
     {% if current_user.is_authenticated %}
-    <!-- Offcanvas Menú Lateral (Sidebar) -->
-    <div class="offcanvas offcanvas-start border-0 shadow" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width: 280px;">
-        <div class="offcanvas-header bg-white border-bottom">
-            <div class="d-flex align-items-center">
-                <h5 class="offcanvas-title fw-bold text-dark m-0" id="offcanvasNavbarLabel">
-                    <i class="fa-solid fa-user-circle me-2 text-primary"></i>{{ current_user.rol | capitalize }}
-                </h5>
+    <!-- Offcanvas Menú Lateral Premium (Sidebar) -->
+    <div class="offcanvas offcanvas-start border-0 shadow-lg" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width: 300px;">
+        <!-- Header con Avatar y Rol -->
+        <div class="sidebar-header-card">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="sidebar-avatar-circle">
+                        {% if current_user.rol == 'admin' %}
+                            <i class="fa-solid fa-crown text-dark" style="font-size: 1.1rem;"></i>
+                        {% else %}
+                            <i class="fa-solid fa-user-tie text-dark" style="font-size: 1.1rem;"></i>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h6 class="text-white fw-bold mb-0 text-truncate" style="max-width: 140px; font-family: var(--font-heading); letter-spacing: 0.3px;">
+                            {{ current_user.nombre if current_user.nombre else (current_user.rol | capitalize) }}
+                        </h6>
+                        <span class="badge rounded-pill text-dark fw-bold px-2 py-0 mt-1" style="font-size: 0.68rem; background: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%); letter-spacing: 0.5px;">
+                            {{ 'ADMINISTRADOR' if current_user.rol == 'admin' else 'VENDEDOR' }}
+                        </span>
+                    </div>
+                </div>
+                <button type="button" class="sidebar-close-btn" data-bs-dismiss="offcanvas" aria-label="Close" title="Cerrar Menú">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body d-flex flex-column p-0">
-            <ul class="navbar-nav w-100 mb-auto px-3 py-3 gap-2">
+
+        <!-- Cuerpo del Menú con Scroll Suave -->
+        <div class="offcanvas-body d-flex flex-column px-3 py-3" style="scrollbar-width: thin; scrollbar-color: #E5E7EB transparent;">
+            <div class="mb-auto">
                 {% if current_user.rol == 'admin' %}
-                    <!-- Enlaces Únicos para el Administrador de la Tienda -->
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/admin/dashboard"><i class="fa-solid fa-chart-pie text-primary me-2" style="width:20px; text-align:center;"></i> Dashboard</a>
-                    </li>
-                    <!-- Módulo Inventario -->
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#collapseInventario" role="button" aria-expanded="false" aria-controls="collapseInventario">
-                            <span><i class="fa-solid fa-box text-primary me-2" style="width:20px; text-align:center;"></i> Módulo Inventario</span>
-                            <i class="fa-solid fa-chevron-down small text-muted"></i>
+                    <!-- Categoría: PRINCIPAL -->
+                    <div class="sidebar-category-label">Principal</div>
+                    <a class="sidebar-nav-item" href="/admin/dashboard">
+                        <div class="sidebar-icon-box icon-box-indigo">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <span>Dashboard General</span>
+                    </a>
+
+                    <!-- Categoría: GESTIÓN & VENTAS -->
+                    <div class="sidebar-category-label">Operaciones & Ventas</div>
+                    
+                    <!-- Módulo Inventario Desplegable -->
+                    <div>
+                        <a class="sidebar-nav-item d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#collapseInventario" role="button" aria-expanded="false" aria-controls="collapseInventario">
+                            <div class="d-flex align-items-center">
+                                <div class="sidebar-icon-box icon-box-emerald">
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                </div>
+                                <span>Módulo Inventario</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down chevron-toggle small"></i>
                         </a>
                         <div class="collapse" id="collapseInventario">
-                            <ul class="nav flex-column ms-3 mt-1 mb-2 gap-1 border-start ps-2">
-                                <li class="nav-item">
-                                    <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold small" href="/inventory"><i class="fa-solid fa-box-open text-primary me-2" style="width:20px; text-align:center;"></i> Inventario Tienda</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold small" href="/sales/catalogo"><i class="fa-solid fa-book-open text-primary me-2" style="width:20px; text-align:center;"></i> Catálogo Físico</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <!-- Módulo Caja Visual -->
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/sales/caja_visual"><i class="fa-solid fa-cash-register text-primary me-2" style="width:20px; text-align:center;"></i> Caja Registradora</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/admin/vendedores"><i class="fa-solid fa-users text-primary me-2" style="width:20px; text-align:center;"></i> Personal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/proveedores"><i class="fa-solid fa-truck-field text-primary me-2" style="width:20px; text-align:center;"></i> Proveedores</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/gastos"><i class="fa-solid fa-money-bill-transfer text-primary me-2" style="width:20px; text-align:center;"></i> Gastos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom d-flex align-items-center justify-content-between" href="{{ url_for('admin_bp.aprobaciones') }}">
-                            <div>
-                                <i class="fa-solid fa-stamp text-primary me-2" style="width:20px; text-align:center;"></i> Aprobaciones de Precios
+                            <div class="sidebar-submenu-box">
+                                <a class="sidebar-sub-item" href="/inventory">
+                                    <i class="fa-solid fa-box-open text-emerald" style="color: #059669;"></i>
+                                    <span>Inventario Tienda</span>
+                                </a>
+                                <a class="sidebar-sub-item" href="/sales/catalogo">
+                                    <i class="fa-solid fa-book-open text-teal" style="color: #0D9488;"></i>
+                                    <span>Catálogo Físico</span>
+                                </a>
                             </div>
-                            <span class="badge bg-danger rounded-pill px-2 py-1 small" id="sidebar_approval_badge" style="display: none;">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-bold bg-light border" href="/arqueo/nuevo"><i class="fa-solid fa-calculator text-primary me-2" style="width:20px; text-align:center;"></i> Arqueo de Caja</a>
-                    </li>
+                        </div>
+                    </div>
+
+                    <a class="sidebar-nav-item" href="/sales/caja_visual">
+                        <div class="sidebar-icon-box icon-box-amber">
+                            <i class="fa-solid fa-cash-register"></i>
+                        </div>
+                        <span>Caja Registradora</span>
+                    </a>
+
+                    <!-- Categoría: ADMINISTRACIÓN -->
+                    <div class="sidebar-category-label">Administración</div>
+                    
+                    <a class="sidebar-nav-item" href="/admin/vendedores">
+                        <div class="sidebar-icon-box icon-box-sky">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <span>Personal & Equipo</span>
+                    </a>
+
+                    <a class="sidebar-nav-item" href="/proveedores">
+                        <div class="sidebar-icon-box icon-box-purple">
+                            <i class="fa-solid fa-truck-ramp-box"></i>
+                        </div>
+                        <span>Proveedores</span>
+                    </a>
+
+                    <a class="sidebar-nav-item" href="/gastos">
+                        <div class="sidebar-icon-box icon-box-rose">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <span>Control de Gastos</span>
+                    </a>
+
+                    <a class="sidebar-nav-item d-flex align-items-center justify-content-between" href="{{ url_for('admin_bp.aprobaciones') }}">
+                        <div class="d-flex align-items-center">
+                            <div class="sidebar-icon-box icon-box-pink">
+                                <i class="fa-solid fa-stamp"></i>
+                            </div>
+                            <span>Aprobaciones</span>
+                        </div>
+                        <span class="badge bg-danger rounded-pill px-2 py-1 small" id="sidebar_approval_badge" style="display: none;">0</span>
+                    </a>
+
+                    <!-- Tarjeta Destacada: Arqueo -->
+                    <div class="sidebar-category-label">Cierre de Caja</div>
+                    <a class="sidebar-nav-item sidebar-nav-highlight" href="/arqueo/nuevo">
+                        <div class="sidebar-icon-box icon-box-gold">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="fw-bold" style="color: #111827;">Arqueo de Caja</span>
+                            <span style="font-size: 0.72rem; color: #926C09; font-weight: 600;">Cuadre y cierre diario</span>
+                        </div>
+                    </a>
+
                 {% elif current_user.rol == 'vendedor' %}
                     <!-- Vistas Estrictamente Operativas (Cajeros) -->
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/sales/caja_visual"><i class="fa-solid fa-cash-register text-primary me-2" style="width:20px; text-align:center;"></i> Caja Registradora</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/sales/catalogo"><i class="fa-solid fa-book-open text-primary me-2" style="width:20px; text-align:center;"></i> Catálogo Rápido</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/sales/ventas_hoy"><i class="fa-solid fa-list-check text-primary me-2" style="width:20px; text-align:center;"></i> Ventas del Día</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-semibold border-bottom" href="/gastos"><i class="fa-solid fa-money-bill-transfer text-primary me-2" style="width:20px; text-align:center;"></i> Gastos</a>
-                    </li>
-                    <li class="nav-item mt-2">
-                        <a class="nav-link text-brand-black rounded-3 px-3 py-2 fw-bold bg-light border" href="/arqueo/nuevo"><i class="fa-solid fa-calculator text-primary me-2" style="width:20px; text-align:center;"></i> Arqueo de Caja</a>
-                    </li>
+                    <div class="sidebar-category-label">Caja y Ventas</div>
+                    
+                    <a class="sidebar-nav-item" href="/sales/caja_visual">
+                        <div class="sidebar-icon-box icon-box-amber">
+                            <i class="fa-solid fa-cash-register"></i>
+                        </div>
+                        <span>Caja Registradora</span>
+                    </a>
+
+                    <a class="sidebar-nav-item" href="/sales/catalogo">
+                        <div class="sidebar-icon-box icon-box-teal">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <span>Catálogo Rápido</span>
+                    </a>
+
+                    <a class="sidebar-nav-item" href="/sales/ventas_hoy">
+                        <div class="sidebar-icon-box icon-box-indigo">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                        <span>Ventas del Día</span>
+                    </a>
+
+                    <a class="sidebar-nav-item" href="/gastos">
+                        <div class="sidebar-icon-box icon-box-rose">
+                            <i class="fa-solid fa-receipt"></i>
+                        </div>
+                        <span>Registrar Gasto</span>
+                    </a>
+
+                    <!-- Tarjeta Destacada: Arqueo -->
+                    <div class="sidebar-category-label">Cierre de Turno</div>
+                    <a class="sidebar-nav-item sidebar-nav-highlight" href="/arqueo/nuevo">
+                        <div class="sidebar-icon-box icon-box-gold">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span class="fw-bold" style="color: #111827;">Arqueo de Caja</span>
+                            <span style="font-size: 0.72rem; color: #926C09; font-weight: 600;">Cierre de turno</span>
+                        </div>
+                    </a>
                 {% endif %}
-            </ul>
+            </div>
             
             <!-- Botón Instalar App PWA (Visible en dispositivos compatibles) -->
-            <div class="px-3 pb-2 mt-auto d-none" id="pwa-install-container">
-                <button class="btn btn-outline-dark w-100 rounded-pill fw-bold d-flex align-items-center justify-content-center gap-2" 
-                        style="border-color: var(--brand-primary); color: var(--brand-primary); background-color: #FFF1F7;" 
+            <div class="pt-3 pb-2 d-none" id="pwa-install-container">
+                <button class="btn btn-sidebar-pwa w-100 d-flex align-items-center justify-content-center gap-2" 
                         onclick="triggerPWAInstall()">
-                    <i class="fa-solid fa-download" style="color: var(--brand-primary);"></i> Instalar App PWA
+                    <i class="fa-solid fa-mobile-screen-button fs-5"></i> 
+                    <span>Instalar App PWA</span>
                 </button>
             </div>
 
             <!-- Interfaz de Desconexión / Fin de Turno al final del sidebar -->
-            <div class="px-3 pb-4">
-                <a class="btn btn-outline-danger w-100 rounded-pill fw-bold" href="{{ url_for('auth_bp.logout') }}">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i> Salir del Sistema
+            <div class="pt-2 pb-2">
+                <a class="btn-sidebar-logout w-100" href="{{ url_for('auth_bp.logout') }}">
+                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Salir del Sistema
                 </a>
             </div>
         </div>
@@ -959,7 +1226,7 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('[PWA] El usuario aceptó la instalación de PUNTO CEL');
+                        console.log('[PWA] El usuario aceptó la instalación de Mariposacel');
                     }
                     deferredPrompt = null;
                     const container = document.getElementById('pwa-install-container');
@@ -969,7 +1236,7 @@
         }
 
         window.addEventListener('appinstalled', () => {
-            console.log('[PWA] PUNTO CEL fue instalada satisfactoriamente');
+            console.log('[PWA] Mariposacel fue instalada satisfactoriamente');
             const container = document.getElementById('pwa-install-container');
             if (container) container.classList.add('d-none');
         });
