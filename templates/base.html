@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Megacel - CRM & POS{% endblock %}</title>
+    <title>{% block title %}Mariposacel - Accesorios & Tecnología{% endblock %}</title>
     <!-- Favicon y PWA Manifest -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=megacel_final">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=megacel_final">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=megacel_final">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=megacel_final">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=megacel_final">
-    <link rel="manifest" href="/manifest.json?v=megacel_final">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=mariposacel_final">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=mariposacel_final">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=mariposacel_final">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=mariposacel_final">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=mariposacel_final">
+    <link rel="manifest" href="/manifest.json?v=mariposacel_final">
     
     <!-- Meta tags PWA para Android, iOS y Navegadores Modernos -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Megacel">
-    <meta name="application-name" content="Megacel">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=megacel_final">
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=megacel_final">
-    <meta name="theme-color" content="#6B1788">
+    <meta name="apple-mobile-web-app-title" content="Mariposacel">
+    <meta name="application-name" content="Mariposacel">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=mariposacel_final">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=mariposacel_final">
+    <meta name="theme-color" content="#D4AF37">
 
-    <!-- Google Fonts: Montserrat (Display & Headings) y Roboto (Body/UI) -->
+    <!-- Google Fonts: Montserrat, Poppins, Inter, Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;0,900;1,700&family=Poppins:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -33,44 +33,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* =========================================================
-           MEGACEL DESIGN SYSTEM: LIGHT BASE + BRAND ACCENTS
-           Paleta Oficial: #FFFFFF (Fondo Base Puro), #0A0A0A (Texto Principal),
-           #6B1788 / #581270 (Morado Eléctrico / Brand Primary),
-           #D81B7A / #E91E63 (Magenta Neón / Secondary Accent),
-           #F8F9FA / #F3F4F6 (Superficies/Cards), #E5E7EB (Líneas y bordes)
+           MARIPOSACEL DESIGN SYSTEM: TECH LIGHT THEME
+           Canvas Base: #FFFFFF (Blanco Puro)
+           Cards / Containers: #FBFBFC, Bordes #E5E7EB
+           Color Primario: #D4AF37 / #E5B842 (Oro Metálico Tech)
+           Color Secundario: #1F1F1F (Negro Grafito)
+           Color Acento: #D7A86E (Ámbar Cálido)
+           Texto: Principal #111827, Secundario #4B5563
+           Degradado Corporativo: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%)
            ========================================================= */
         :root {
-            --brand-bg: #FFFFFF;            /* Fondo blanco puro */
-            --brand-white: #FFFFFF;         /* Blanco puro */
-            --brand-surface: #F8F9FA;       /* Tarjetas y superficies suaves */
-            --brand-surface-card: #FFFFFF;
-            --brand-card-bg: #FFFFFF;
+            --brand-bg: #FFFFFF;            /* Canvas blanco puro */
+            --brand-white: #FFFFFF;
+            --brand-surface: #FBFBFC;       /* Contenedores y Cards */
+            --brand-surface-card: #FBFBFC;
+            --brand-card-bg: #FBFBFC;
             --brand-surface-hover: #F3F4F6;
 
-            --brand-primary: #6B1788;       /* Morado Eléctrico Brand */
-            --brand-primary-dark: #581270;  /* Morado Profundo */
-            --brand-secondary: #D81B7A;     /* Magenta / Rosa Neón */
-            --brand-secondary-light: #E91E63;
-            --brand-pink: #D81B7A;          /* Magenta Neón */
+            --brand-primary: #D4AF37;       /* Oro Metálico Tech */
+            --brand-primary-btn: #E5B842;   /* Botón primario y focus */
+            --brand-primary-dark: #B89028;  /* Oro Oscuro */
+            --brand-secondary: #1F1F1F;     /* Negro Grafito */
+            --brand-secondary-light: #374151;
+            --brand-accent: #D7A86E;        /* Ámbar Cálido */
+            --brand-pink: #D4AF37;
             --brand-red: #DC2626;           /* Alertas y faltantes */
-            --brand-cyan: #6B1788;
-            --brand-blue: #0A0A0A;
+            --brand-cyan: #D4AF37;
+            --brand-blue: #1F1F1F;
 
-            --brand-text: #0A0A0A;          /* Texto principal negro puro */
-            --brand-text-dark: #0A0A0A;
-            --brand-black: #0A0A0A;
-            --brand-text-muted: #6B7280;    /* Gris equilibrado legibilidad */
-            --brand-border: #E5E7EB;        /* Bordes limpios */
-            --brand-border-dark: #CBD5E1;
+            --brand-text: #111827;          /* Negro profundo para legibilidad total */
+            --brand-text-dark: #111827;
+            --brand-black: #111827;
+            --brand-text-muted: #4B5563;    /* Texto secundario */
+            --brand-border: #E5E7EB;        /* Bordes sutiles */
+            --brand-border-dark: #D1D5DB;
 
-            --brand-gradient: linear-gradient(135deg, #581270 0%, #B01E84 50%, #E91E63 100%);
-            --brand-gradient-hover: linear-gradient(135deg, #6B1788 0%, #D81B7A 100%);
-            --brand-neon-glow: 0 4px 15px rgba(107, 23, 136, 0.35);
-            --brand-neon-glow-sm: 0 2px 8px rgba(107, 23, 136, 0.25);
+            --brand-gradient: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%);
+            --brand-gradient-hover: linear-gradient(135deg, #E5B842 0%, #F8E3A1 100%);
+            --brand-neon-glow: 0 4px 15px rgba(212, 175, 55, 0.35);
+            --brand-neon-glow-sm: 0 2px 8px rgba(212, 175, 55, 0.25);
 
-            --font-display: 'Montserrat', sans-serif;
-            --font-heading: 'Montserrat', -apple-system, sans-serif;
-            --font-body: 'Roboto', 'Montserrat', -apple-system, sans-serif;
+            --font-display: 'Montserrat', 'Poppins', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Inter', 'Roboto', -apple-system, sans-serif;
         }
 
         body {
@@ -87,16 +92,32 @@
             font-weight: 700;
         }
 
+        .section-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--brand-text-muted);
+            font-size: 0.8rem;
+        }
+
+        .display-total {
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+            font-weight: 800;
+            color: var(--brand-text);
+        }
+
         /* Clases base con alto contraste */
-        .bg-brand-blue { background-color: #0A0A0A !important; color: #FFFFFF !important; border: 1px solid #0A0A0A; }
+        .bg-brand-blue { background-color: var(--brand-secondary) !important; color: #FFFFFF !important; border: 1px solid var(--brand-secondary); }
         .text-brand-blue { color: var(--brand-primary) !important; font-weight: 700; }
-        .bg-brand-pink { background: var(--brand-gradient) !important; color: #FFFFFF !important; box-shadow: var(--brand-neon-glow-sm); }
+        .bg-brand-pink { background: var(--brand-gradient) !important; color: #111827 !important; box-shadow: var(--brand-neon-glow-sm); }
         .bg-brand-white { background-color: #FFFFFF !important; color: var(--brand-text) !important; border: 1px solid var(--brand-border); }
         
         .text-brand-black { color: var(--brand-text) !important; }
-        .text-brand-pink { color: var(--brand-secondary) !important; font-weight: 700; }
+        .text-brand-pink { color: var(--brand-primary) !important; font-weight: 700; }
+        .badge-accent { background-color: var(--brand-accent) !important; color: #FFFFFF !important; font-weight: 600; }
 
-        /* Navbar Clean White para Megacel */
+        /* Navbar Clean White para Mariposacel */
         .navbar-custom {
             background-color: #FFFFFF !important;
             border-bottom: 2px solid var(--brand-border);
@@ -107,7 +128,7 @@
         .navbar-custom .navbar-brand {
             font-family: var(--font-display);
             font-weight: 900;
-            color: #0A0A0A !important;
+            color: #111827 !important;
             font-size: 1.6rem;
             letter-spacing: 1px;
         }
@@ -117,7 +138,7 @@
         }
 
         .navbar-custom .nav-link {
-            color: #0A0A0A;
+            color: #111827;
             font-weight: 500;
             margin-left: 1rem;
             transition: color 0.2s;
@@ -131,30 +152,30 @@
         /* Botones Pro */
         .btn-pink, .btn-primary, .btn-brand {
             background: var(--brand-gradient) !important;
-            color: #FFFFFF !important;
+            color: #111827 !important;
             font-weight: 700;
-            border: none;
+            border: 1px solid #D4AF37;
             transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 10px rgba(107, 23, 136, 0.25);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.25);
             font-family: var(--font-heading);
         }
         .btn-pink:hover, .btn-primary:hover, .btn-brand:hover {
             background: var(--brand-gradient-hover) !important;
-            color: #FFFFFF !important;
+            color: #111827 !important;
             transform: translateY(-2px);
             box-shadow: var(--brand-neon-glow);
         }
 
-        .btn-blue {
-            background-color: #000000 !important;
+        .btn-blue, .btn-dark-graphite {
+            background-color: var(--brand-secondary) !important;
             color: #FFFFFF !important;
             font-weight: 600;
-            border: 1px solid #000000;
+            border: 1px solid var(--brand-secondary);
             transition: all 0.2s ease-in-out;
             font-family: var(--font-heading);
         }
-        .btn-blue:hover {
-            background-color: #212121 !important;
+        .btn-blue:hover, .btn-dark-graphite:hover {
+            background-color: #2D2D2D !important;
             color: #FFFFFF !important;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -162,7 +183,7 @@
 
         .btn-outline-pink, .btn-outline-brand {
             background-color: transparent;
-            color: var(--brand-primary) !important;
+            color: #B89028 !important;
             font-weight: 600;
             border: 1.5px solid var(--brand-primary);
             transition: all 0.2s ease-in-out;
@@ -170,17 +191,17 @@
         }
         .btn-outline-pink:hover, .btn-outline-brand:hover {
             background: var(--brand-gradient) !important;
-            color: #FFFFFF !important;
+            color: #111827 !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(107, 23, 136, 0.3);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
 
-        /* Superficies */
+        /* Superficies y Cards */
         .card-custom, .card {
-            background-color: #FFFFFF;
+            background-color: var(--brand-surface);
             border: 1px solid var(--brand-border);
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             color: var(--brand-text);
         }
 
@@ -193,8 +214,8 @@
             font-family: var(--font-body);
         }
         .table-custom thead th, .table thead th {
-            background-color: #F8F9FA !important;
-            color: #0A0A0A !important;
+            background-color: #F9FAFB !important;
+            color: #111827 !important;
             border-bottom: 2px solid var(--brand-primary) !important;
             text-transform: uppercase;
             font-size: 0.78rem;
@@ -212,7 +233,7 @@
             font-family: var(--font-body);
         }
         .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #F9FAFB;
+            background-color: #FBFBFC;
         }
 
         /* Inputs y Formularios */
@@ -224,7 +245,7 @@
         }
         .form-control:focus, .form-select:focus {
             border-color: var(--brand-primary) !important;
-            box-shadow: 0 0 0 3px rgba(107, 23, 136, 0.2) !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25) !important;
             background-color: #FFFFFF !important;
             color: var(--brand-text) !important;
         }
@@ -235,20 +256,20 @@
             font-weight: 600;
         }
 
-        /* Sidebar Offcanvas Estilos (Clean Light Mode Megacel) */
+        /* Sidebar Offcanvas Estilos (Clean Light Mode Mariposacel) */
         .offcanvas {
             background-color: #FFFFFF !important;
             color: var(--brand-text) !important;
             border-right: 1px solid var(--brand-border) !important;
-            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.06) !important;
+            box-shadow: 4px 0 25px rgba(0, 0, 0, 0.05) !important;
         }
         .offcanvas-header {
             background: #FFFFFF !important;
-            border-bottom: 2px solid var(--brand-border) !important;
+            border-bottom: 1px solid var(--brand-border) !important;
             padding: 1rem 1.25rem;
         }
         .offcanvas-title {
-            color: #0A0A0A !important;
+            color: #111827 !important;
             font-family: var(--font-heading);
             font-weight: 800;
             letter-spacing: 0.5px;
@@ -257,7 +278,7 @@
             filter: none;
         }
         .offcanvas-body .nav-link {
-            color: #1F2937 !important;
+            color: #374151 !important;
             transition: all 0.2s ease-in-out;
             font-weight: 500;
             font-family: var(--font-body);
@@ -269,10 +290,10 @@
         }
         .offcanvas-body .nav-link:hover,
         .offcanvas-body .nav-link.active {
-            background-color: rgba(107, 23, 136, 0.08) !important;
+            background-color: rgba(212, 175, 55, 0.08) !important;
             transform: translateX(4px);
             border-left: 4px solid var(--brand-primary) !important;
-            color: var(--brand-primary) !important;
+            color: #B89028 !important;
         }
         .offcanvas-body .nav-link:hover i,
         .offcanvas-body .nav-link:hover .fa-solid,
@@ -282,8 +303,8 @@
             transform: scale(1.15);
         }
         .offcanvas-body .border-bottom { border-bottom-color: var(--brand-border) !important; }
-        .offcanvas-body .bg-light { background-color: #F8F9FA !important; border-color: var(--brand-border) !important; color: var(--brand-text) !important; }
-        .offcanvas-body .text-muted { color: #6B7280 !important; }
+        .offcanvas-body .bg-light { background-color: #F9FAFB !important; border-color: var(--brand-border) !important; color: var(--brand-text) !important; }
+        .offcanvas-body .text-muted { color: var(--brand-text-muted) !important; }
 
         /* Reglas EXCLUSIVAS para móviles (<768px): el computador permanece 100% intacto */
         @media (max-width: 767.98px) {
@@ -317,27 +338,27 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navbar MEGACEL -->
+    <!-- Navbar MARIPOSACEL -->
     <nav class="navbar navbar-custom mb-4 mb-md-5">
         <div class="container-fluid px-2 px-md-3 d-flex align-items-center justify-content-between">
             
-            <!-- Columna Izquierda: Botón Hamburguesa (Mantiene ancho fijo para centrado perfecto) -->
+            <!-- Columna Izquierda: Botón Hamburguesa -->
             <div class="d-flex align-items-center" style="min-width: 44px;">
                 {% if current_user.is_authenticated %}
                 <button class="navbar-toggler border-0 shadow-none p-1 p-md-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" title="Menú">
-                    <i class="fa-solid fa-bars fs-3" style="color: #0A0A0A;"></i>
+                    <i class="fa-solid fa-bars fs-3" style="color: #111827;"></i>
                 </button>
                 {% else %}
                 <div style="width: 40px;"></div>
                 {% endif %}
             </div>
 
-            <!-- Columna Centro: Brand Logo (Centrado natural flexible sin colisión) -->
+            <!-- Columna Centro: Brand Logo (Mariposacel) -->
             <div class="d-flex justify-content-center flex-grow-1 px-1 px-sm-2 text-center overflow-hidden">
                 <a class="navbar-brand d-inline-flex align-items-center fw-bold m-0 text-nowrap" href="{{ url_for('index') }}" style="letter-spacing: 1.5px; font-size: clamp(1.3rem, 4vw, 1.7rem); font-family: var(--font-display);">
-                    <img src="{{ url_for('static', filename='img/icons/icon-192x192.png') }}" alt="Megacel Logo" class="me-2 rounded-2" style="width: 34px; height: 34px; object-fit: contain;">
-                    <span style="color: #0A0A0A; font-weight: 900;">Megacel</span>
-                    <span class="navbar-brand-tech small ms-2 px-2 py-0 rounded" style="color: var(--brand-primary); font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(107, 23, 136, 0.35); background-color: rgba(107, 23, 136, 0.06); letter-spacing: 1px;">ACCESORIOS PARA CELULARES</span>
+                    <img src="{{ url_for('static', filename='img/Mariposacel.png') }}" alt="Mariposacel Logo" class="me-2 rounded-2" style="width: 38px; height: 38px; object-fit: contain;">
+                    <span style="color: #111827; font-weight: 900;">Mariposacel</span>
+                    <span class="navbar-brand-tech small ms-2 px-2 py-0 rounded" style="color: #926C09; font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.4); background-color: rgba(212, 175, 55, 0.08); letter-spacing: 1px;">ACCESORIOS & TECNOLOGÍA</span>
                 </a>
             </div>
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'megacel-pwa-v1';
+const CACHE_NAME = 'mariposacel-pwa-v1';
 
 const PRECACHE_ASSETS = [
     '/',

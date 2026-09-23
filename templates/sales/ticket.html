@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket de Compra #{{ venta.id }} - Megacel</title>
+    <title>Ticket de Compra #{{ venta.id }} - Mariposacel</title>
     <!-- Open Graph Meta Tags para Previsualización Rica en WhatsApp / Redes Sociales -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Megacel - Recibo Digital #{{ venta.id }}">
-    <meta property="og:description" content="Comprobante de compra oficial de Megacel - Accesorios para Celulares. Total: ${{ (venta.monto_total)|cop }} COP">
+    <meta property="og:title" content="Mariposacel - Recibo Digital #{{ venta.id }}">
+    <meta property="og:description" content="Comprobante de compra oficial de Mariposacel - Accesorios & Tecnología. Total: ${{ (venta.monto_total)|cop }} COP">
     <meta property="og:image" content="{{ url_for('static', filename='img/icons/icon-512x512.png', _external=True) }}">
     <meta property="og:url" content="{{ request.url }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=megacel_final">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=megacel_final">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=megacel_final">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=megacel_final">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=mariposacel_final">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=mariposacel_final">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=mariposacel_final">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=mariposacel_final">
     <!-- Google Fonts: Montserrat, Roboto y Roboto Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +26,8 @@
     <style>
         /* =========================================================
            TICKET DIGITAL (VISTA PANTALLA / NAVEGADOR / PDF)
-           Paleta Oficial Megacel: Fondo Blanco #FFFFFF,
-           Texto Negro #0A0A0A, Acentos Morado Eléctrico #6B1788 y Magenta #D81B7A
+           Paleta Oficial Mariposacel: Fondo Blanco #FFFFFF,
+           Texto Negro #111827, Acentos Oro #D4AF37 y Grafito #1F1F1F
            ========================================================= */
         body {
             background-color: #F8F9FA;
@@ -36,7 +36,7 @@
             display: flex;
             justify-content: center;
             font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #0A0A0A;
+            color: #111827;
         }
         
         .ticket {
@@ -44,16 +44,16 @@
             width: 100%;
             max-width: 380px; /* Ancho estándar de impresora térmica 80mm */
             padding: 25px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05), 0 0 20px rgba(107, 23, 136, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05), 0 0 20px rgba(212, 175, 55, 0.08);
             border: 1px solid #E5E7EB;
-            border-top: 4px solid #6B1788;
+            border-top: 4px solid #D4AF37;
             border-radius: 12px;
             box-sizing: border-box;
         }
 
         .header {
             text-align: center;
-            border-bottom: 2px dashed #6B1788;
+            border-bottom: 2px dashed #D4AF37;
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
@@ -64,14 +64,14 @@
             font-weight: 900;
             margin: 0 0 4px 0;
             letter-spacing: 2px;
-            color: #0A0A0A;
+            color: #111827;
         }
 
         .subtitle-brand {
             font-size: 0.75rem;
             letter-spacing: 1.5px;
             font-weight: 700;
-            color: #6B1788;
+            color: #926C09;
             margin-bottom: 12px;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
@@ -95,8 +95,8 @@
 
         .table-items th {
             text-align: left;
-            border-bottom: 2px solid #6B1788;
-            color: #6B1788;
+            border-bottom: 2px solid #D4AF37;
+            color: #926C09;
             padding-bottom: 8px;
             font-weight: 700;
             font-size: 0.78rem;
@@ -108,7 +108,7 @@
             padding: 10px 0;
             vertical-align: top;
             border-bottom: 1px solid #E5E7EB;
-            color: #0A0A0A;
+            color: #111827;
             font-family: 'Roboto', sans-serif;
         }
 
@@ -117,7 +117,7 @@
         .col-sub { width: 30%; text-align: right; font-family: 'Roboto Mono', monospace; font-weight: 700; }
 
         .totals {
-            border-top: 2px dashed #6B1788;
+            border-top: 2px dashed #D4AF37;
             padding-top: 20px;
             margin-bottom: 25px;
         }
@@ -128,11 +128,11 @@
             align-items: center;
             font-size: 1.35rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #581270 0%, #B01E84 50%, #E91E63 100%);
-            color: #FFFFFF;
+            background: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%);
+            color: #111827;
             padding: 12px 16px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(107, 23, 136, 0.25);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
             font-family: 'Montserrat', sans-serif;
             letter-spacing: 0.5px;
         }
@@ -150,9 +150,9 @@
             display: block;
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #581270 0%, #B01E84 50%, #E91E63 100%);
-            color: #FFFFFF;
-            border: none;
+            background: linear-gradient(135deg, #D4AF37 0%, #F3D079 100%);
+            color: #111827;
+            border: 1px solid #D4AF37;
             font-size: 1rem;
             border-radius: 8px;
             font-weight: 800;
@@ -161,12 +161,12 @@
             cursor: pointer;
             margin-top: 25px;
             transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(107, 23, 136, 0.25);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
         }
 
         .btn-print:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 22px rgba(216, 27, 122, 0.45);
+            box-shadow: 0 6px 22px rgba(212, 175, 55, 0.4);
         }
 
         .btn-whatsapp {
@@ -372,9 +372,9 @@
 <div class="ticket">
     <div class="header">
         <h1 class="logo">
-            <span style="color: #0A0A0A; font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 2px;">Megacel</span>
+            <span style="color: #111827; font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 2px;">Mariposacel</span>
         </h1>
-        <div class="subtitle-brand">MEGACEL - ACCESORIOS PARA CELULARES</div>
+        <div class="subtitle-brand">MARIPOSACEL - ACCESORIOS & TECNOLOGÍA</div>
         
         <p class="info">Folio / Ticket: #{{ venta.id }}</p>
         <p class="info">Expedido: {{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}</p>
@@ -447,7 +447,7 @@
     <div class="footer">
         <p style="font-size: 0.95rem; font-weight: bold; color: #000000; margin-bottom: 6px; font-family: 'Montserrat', sans-serif;">¡Gracias por tu compra!</p>
         <p style="margin-bottom: 4px;">Políticas de Tienda: Devoluciones únicamente presentando ticket impreso o digital.</p>
-        <p>Soporte: ventas@megacel.com</p>
+        <p>Soporte: ventas@mariposacel.com</p>
     </div>
 
     <a href="javascript:void(0);" onclick="volverACaja();" class="btn-return">
@@ -535,7 +535,7 @@
         try {
             const canvas = await generarCanvasTicket();
             const link = document.createElement('a');
-            link.download = `Factura_Megacel_${SALE_ID}.png`;
+            link.download = `Factura_Mariposacel_${SALE_ID}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         } catch (e) {
@@ -581,9 +581,9 @@
 
         let mensaje;
         if (nombre) {
-            mensaje = `Hola ${nombre}! Aquí tienes tu factura digital de Megacel - Accesorios para Celulares: ${enlaceRecibo}`;
+            mensaje = `Hola ${nombre}! Aquí tienes tu factura digital de Mariposacel - Accesorios & Tecnología: ${enlaceRecibo}`;
         } else {
-            mensaje = `Hola! Aquí tienes tu factura digital de Megacel - Accesorios para Celulares: ${enlaceRecibo}`;
+            mensaje = `Hola! Aquí tienes tu factura digital de Mariposacel - Accesorios & Tecnología: ${enlaceRecibo}`;
         }
 
         const url = `https://wa.me/${raw}?text=${encodeURIComponent(mensaje)}`;
@@ -592,7 +592,7 @@
     }
 
     // Texto limpio garantizado sin caracteres conflictivos
-    const mensajeTextoLimpio = `*MEGACEL - ACCESORIOS PARA CELULARES*
+    const mensajeTextoLimpio = `*MARIPOSACEL - ACCESORIOS & TECNOLOGÍA*
 *Folio / Ticket:* #{{ venta.id }}
 *Expedido:* {{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}
 *Cajero:* {{ venta.vendedor.nombre }}
@@ -609,9 +609,9 @@ _Desglose:_
 {% for pago in venta.pagos %}  * {{ pago.metodo_pago|capitalize }}: ${{ (pago.monto)|cop }}
 {% endfor %}
 {% endif %}
-Gracias por tu compra en Megacel - Accesorios para Celulares.
+Gracias por tu compra en Mariposacel - Accesorios & Tecnología.
 Politicas: Devoluciones unicamente con ticket impreso o digital.
-Soporte: ventas@megacel.com`;
+Soporte: ventas@mariposacel.com`;
 
     function enviarWhatsAppSoloTexto() {
         const input = document.getElementById('waNumeroInput');

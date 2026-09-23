@@ -1,14 +1,14 @@
 {
     "id": "/",
-    "name": "Megacel - CRM & POS",
-    "short_name": "Megacel",
-    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas Megacel - Accesorios para Celulares",
+    "name": "Mariposacel - Accesorios & Tecnología",
+    "short_name": "Mariposacel",
+    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas Mariposacel - Accesorios & Tecnología",
     "start_url": "/?source=pwa",
     "scope": "/",
     "display": "standalone",
     "orientation": "any",
     "background_color": "#FFFFFF",
-    "theme_color": "#6B1788",
+    "theme_color": "#D4AF37",
     "categories": [
         "business",
         "finance",
@@ -46,14 +46,14 @@
             "short_name": "Caja",
             "description": "Registrar venta en caja",
             "url": "/sales/caja_visual",
-            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=6", "sizes": "192x192" }]
+            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=mariposacel", "sizes": "192x192" }]
         },
         {
             "name": "Arqueo de Caja",
             "short_name": "Arqueo",
             "description": "Consultar o realizar arqueo de caja",
             "url": "/arqueo/nuevo",
-            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=6", "sizes": "192x192" }]
+            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=mariposacel", "sizes": "192x192" }]
         }
     ]
 }
