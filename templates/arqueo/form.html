@@ -124,14 +124,42 @@
 
     /* Desglose Digital mini cards */
     .mini-canal-card {
-        border-radius: 10px;
-        padding: 0.65rem 0.85rem;
+        border-radius: 12px;
+        padding: 0.65rem 0.5rem;
         background: #ffffff;
         border: 1px solid #e2e8f0;
-        transition: transform 0.15s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 70px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .mini-canal-card:hover {
         transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .mini-canal-label {
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: #64748b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        justify-content: center;
+    }
+    .mini-canal-amount {
+        font-family: var(--font-heading);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #111827;
+        white-space: nowrap;
     }
 </style>
 {% endblock %}
@@ -261,41 +289,41 @@
                     <span class="badge bg-light text-muted border small">{{ desglose_digital.values()|sum|cop }}</span>
                 </div>
                 
-                <div class="row g-2">
+                <div class="row g-2 align-items-stretch">
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">📱 Nequi</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.nequi|cop }}</strong>
+                            <span class="mini-canal-label">📱 Nequi</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.nequi|cop }}</strong>
                         </div>
                     </div>
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">🏦 Bancolombia</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.bancolombia|cop }}</strong>
+                            <span class="mini-canal-label">🏦 Bancolombia</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.bancolombia|cop }}</strong>
                         </div>
                     </div>
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">📱 Daviplata</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.daviplata|cop }}</strong>
+                            <span class="mini-canal-label">📱 Daviplata</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.daviplata|cop }}</strong>
                         </div>
                     </div>
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">💳 Datáfono</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.datafono|cop }}</strong>
+                            <span class="mini-canal-label">💳 Datáfono</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.datafono|cop }}</strong>
                         </div>
                     </div>
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">⏳ Crédito</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.credito|cop }}</strong>
+                            <span class="mini-canal-label">⏳ Crédito</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.credito|cop }}</strong>
                         </div>
                     </div>
                     <div class="col-4 col-md-2">
                         <div class="mini-canal-card text-center">
-                            <span class="d-block small text-muted fw-semibold">🌐 Otros</span>
-                            <strong class="text-dark fs-6">${{ desglose_digital.otros|cop }}</strong>
+                            <span class="mini-canal-label">🌐 Otros</span>
+                            <strong class="mini-canal-amount">${{ desglose_digital.otros|cop }}</strong>
                         </div>
                     </div>
                 </div>

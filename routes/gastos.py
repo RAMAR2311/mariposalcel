@@ -47,23 +47,29 @@ def index():
         if request.is_json:
             data = request.get_json()
             tipo_gasto = data.get('tipo_gasto')
-            categoria = data.get('categoria', '').strip()
-            descripcion = data.get('descripcion', '').strip()
-            montos = data.get('montos') or [data.get('monto')]
-            metodos_pago = data.get('metodos_pago') or [data.get('metodo_pago', 'efectivo')]
+            categoria = (data.get('categoria') or '').strip()
+            descripcion = (data.get('descripcion') or '').strip()
+            montos_raw = data.get('montos') or [data.get('monto')]
+            metodos_raw = data.get('metodos_pago') or [data.get('metodo_pago', 'efectivo')]
             fecha_str = data.get('fecha_gasto')
         else:
             tipo_gasto = request.form.get('tipo_gasto')
             categoria = (request.form.get('categoria') or '').strip()
             descripcion = (request.form.get('descripcion') or '').strip()
-            montos = request.form.getlist('monto[]')
-            metodos_pago = request.form.getlist('metodo_pago[]')
-            if not montos:
-                monto_single = request.form.get('monto')
-                if monto_single:
-                    montos = [monto_single]
-                    metodos_pago = [request.form.get('metodo_pago', 'efectivo')]
             fecha_str = request.form.get('fecha_gasto')
+
+            # Extraer montos válidos considerando modo simple o modo dividido
+            montos_split = [m for m in request.form.getlist('monto[]') if m and str(m).strip() != '']
+            metodos_split = request.form.getlist('metodo_pago[]')
+
+            if montos_split:
+                montos_raw = montos_split
+                metodos_raw = metodos_split
+            else:
+                monto_single = request.form.get('monto')
+                metodo_single = request.form.get('metodo_pago', 'efectivo')
+                montos_raw = [monto_single] if (monto_single is not None and str(monto_single).strip() != '') else []
+                metodos_raw = [metodo_single]
 
         # Restricción: Vendedores sólo registran gastos diarios / operativos
         if current_user.rol != 'admin' or not tipo_gasto:
@@ -72,10 +78,17 @@ def index():
         if not categoria:
             categoria = 'Varios'
 
-        # Resolver fecha
+        if not descripcion:
+            descripcion = categoria
+
+        # Resolver fecha y hora con precisión
         if fecha_str:
             try:
-                fecha_obj = datetime.strptime(fecha_str, '%Y-%m-%d')
+                parsed_date = datetime.strptime(fecha_str, '%Y-%m-%d').date()
+                if parsed_date == ahora.date():
+                    fecha_obj = ahora
+                else:
+                    fecha_obj = datetime.combine(parsed_date, ahora.time())
             except ValueError:
                 fecha_obj = ahora
         else:
@@ -90,24 +103,38 @@ def index():
             flash(msg, 'danger')
             return redirect(url_for('gastos_bp.index'))
 
+        # Validar pares de montos y métodos
+        pares_validos = []
+        for monto, metodo in zip(montos_raw, metodos_raw):
+            if monto is not None and str(monto).strip() != '':
+                try:
+                    valor_float = float(monto)
+                    if valor_float > 0:
+                        pares_validos.append((valor_float, (metodo or 'efectivo').lower().strip()))
+                except (ValueError, TypeError):
+                    pass
+
+        if not pares_validos:
+            msg = 'Debes ingresar un monto válido mayor a 0.'
+            if is_ajax:
+                return jsonify({'success': False, 'error': msg}), 400
+            flash(msg, 'warning')
+            return redirect(url_for('gastos_bp.index'))
+
         nuevos_gastos = []
         try:
-            for monto, metodo in zip(montos, metodos_pago):
-                if monto is None or str(monto).strip() == '':
-                    continue
-                valor_float = float(monto)
-                if valor_float > 0:
-                    nuevo_gasto = Expense(
-                        usuario_id=current_user.id,
-                        tipo_gasto=tipo_gasto,
-                        categoria=categoria,
-                        descripcion=descripcion,
-                        monto=valor_float,
-                        metodo_pago=(metodo or 'efectivo').lower(),
-                        fecha_gasto=fecha_obj
-                    )
-                    db.session.add(nuevo_gasto)
-                    nuevos_gastos.append(nuevo_gasto)
+            for valor_float, metodo in pares_validos:
+                nuevo_gasto = Expense(
+                    usuario_id=current_user.id,
+                    tipo_gasto=tipo_gasto,
+                    categoria=categoria,
+                    descripcion=descripcion,
+                    monto=valor_float,
+                    metodo_pago=metodo,
+                    fecha_gasto=fecha_obj
+                )
+                db.session.add(nuevo_gasto)
+                nuevos_gastos.append(nuevo_gasto)
 
             db.session.commit()
 

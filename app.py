@@ -85,6 +85,14 @@ def create_app():
     from routes.proveedores import providers_bp
     app.register_blueprint(providers_bp, url_prefix='/proveedores')
 
+    # Registro de Blueprints Bodega, Clientes y Maneos
+    from routes.bodega import bodega_bp
+    from routes.clientes import clientes_bp
+    from routes.maneos import maneos_bp
+    app.register_blueprint(bodega_bp, url_prefix='/bodega')
+    app.register_blueprint(clientes_bp, url_prefix='/clientes')
+    app.register_blueprint(maneos_bp, url_prefix='/maneos')
+
     # Registro de Blueprint Aprobaciones de Precios en Tiempo Real
     from routes.aprobaciones import aprobaciones_bp
     app.register_blueprint(aprobaciones_bp, url_prefix='/api')

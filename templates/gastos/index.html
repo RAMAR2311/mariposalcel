@@ -376,40 +376,28 @@
                 </label>
                 <input type="hidden" name="metodo_pago" id="inputMetodoPago" value="efectivo">
                 <div class="row g-2" id="contenedorMetodosPago">
-                    <div class="col-6 col-sm-4 col-md-auto">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="paymethod-radio-card active" data-metodo="efectivo">
                             <i class="fa-solid fa-money-bill-wave text-success fs-5 d-block mb-1"></i>
                             <span class="small fw-bold text-dark">Efectivo (Caja)</span>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-md-auto">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="paymethod-radio-card" data-metodo="nequi">
                             <i class="fa-solid fa-mobile-screen text-purple fs-5 d-block mb-1" style="color: #6b21a8;"></i>
                             <span class="small fw-bold text-dark">Nequi</span>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-md-auto">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="paymethod-radio-card" data-metodo="bancolombia">
                             <i class="fa-solid fa-building-columns text-warning fs-5 d-block mb-1" style="color: #d97706;"></i>
                             <span class="small fw-bold text-dark">Bancolombia</span>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-md-auto">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="paymethod-radio-card" data-metodo="daviplata">
                             <i class="fa-solid fa-wallet text-danger fs-5 d-block mb-1" style="color: #dc2626;"></i>
                             <span class="small fw-bold text-dark">Daviplata</span>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-md-auto">
-                        <div class="paymethod-radio-card" data-metodo="bolt">
-                            <i class="fa-solid fa-bolt text-primary fs-5 d-block mb-1" style="color: #0052FF !important;"></i>
-                            <span class="small fw-bold text-dark">Bolt</span>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-md-auto">
-                        <div class="paymethod-radio-card" data-metodo="datafono">
-                            <i class="fa-solid fa-credit-card text-primary fs-5 d-block mb-1"></i>
-                            <span class="small fw-bold text-dark">Datáfono / Tarjeta</span>
                         </div>
                     </div>
                 </div>
@@ -431,17 +419,15 @@
                     <div class="col-6 col-md-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-text bg-white text-danger fw-bold">$</span>
-                            <input type="number" step="1" min="0" name="monto[]" class="form-control bg-white fw-bold input-monto-split" placeholder="Monto parcial">
+                            <input type="number" step="1" min="0" name="monto[]" class="form-control bg-white fw-bold input-monto-split" placeholder="Monto parcial" disabled>
                         </div>
                     </div>
                     <div class="col-5 col-md-5">
-                        <select name="metodo_pago[]" class="form-select form-select-sm bg-white fw-semibold">
+                        <select name="metodo_pago[]" class="form-select form-select-sm bg-white fw-semibold" disabled>
                             <option value="efectivo" selected>Efectivo (Caja)</option>
                             <option value="nequi">Nequi</option>
                             <option value="bancolombia">Bancolombia</option>
                             <option value="daviplata">Daviplata</option>
-                            <option value="bolt">Bolt</option>
-                            <option value="datafono">Datáfono</option>
                         </select>
                     </div>
                     <div class="col-1 text-end">
@@ -461,7 +447,7 @@
         <div class="row g-3 align-items-center">
             <div class="col-md-9">
                 <label class="form-label fw-bold text-brand-black small text-uppercase mb-1">
-                    4. Detalle / Justificación
+                    4. Detalle / Justificación <span class="text-muted fw-normal text-lowercase">(opcional)</span>
                 </label>
                 <div class="input-group shadow-sm">
                     <span class="input-group-text bg-light border-0"><i class="fa-solid fa-align-left text-muted"></i></span>
@@ -469,8 +455,7 @@
                            name="descripcion" 
                            id="inputDescripcion" 
                            class="form-control bg-light border-0" 
-                           placeholder="Ej: Almuerzo domiciliario turno tarde, flete de repuestos, etc..." 
-                           required>
+                           placeholder="Ej: Almuerzo domiciliario turno tarde, flete de repuestos, etc...">
                 </div>
             </div>
             <div class="col-md-3">
@@ -668,7 +653,6 @@
                                 <option value="nequi">Nequi</option>
                                 <option value="bancolombia">Bancolombia</option>
                                 <option value="daviplata">Daviplata</option>
-                                <option value="datafono">Datáfono</option>
                             </select>
                         </div>
                     </div>
@@ -881,18 +865,26 @@ document.addEventListener('DOMContentLoaded', function() {
             seccionModoSimple.classList.add('d-none');
             seccionModoAvanzado.classList.remove('d-none');
             inputMonto.removeAttribute('required');
+            inputMonto.disabled = true;
+            inputMetodoPago.disabled = true;
+            contenedorLineasMultiples.querySelectorAll('input, select').forEach(el => el.disabled = false);
             actualizarSumaLineasMultiples();
         } else {
             seccionModoSimple.classList.remove('d-none');
             seccionModoAvanzado.classList.add('d-none');
             inputMonto.setAttribute('required', 'required');
+            inputMonto.disabled = false;
+            inputMetodoPago.disabled = false;
+            contenedorLineasMultiples.querySelectorAll('input, select').forEach(el => el.disabled = true);
         }
     });
 
     function actualizarSumaLineasMultiples() {
         let suma = 0;
         document.querySelectorAll('.input-monto-split').forEach(inp => {
-            suma += parseFloat(inp.value) || 0;
+            if (!inp.disabled) {
+                suma += parseFloat(inp.value) || 0;
+            }
         });
         lblTotalDividido.textContent = formatCOP(suma);
     }
@@ -919,7 +911,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <option value="nequi" selected>Nequi</option>
                     <option value="bancolombia">Bancolombia</option>
                     <option value="daviplata">Daviplata</option>
-                    <option value="datafono">Datáfono</option>
                 </select>
             </div>
             <div class="col-1 text-end">
@@ -949,6 +940,11 @@ document.addEventListener('DOMContentLoaded', function() {
             mostrarToast('Ingresa un monto válido mayor a 0.', 'warning');
             inputMonto.focus();
             return;
+        }
+
+        // Si la descripción está vacía, usar el nombre de la categoría
+        if (!inputDescripcion.value.trim()) {
+            inputDescripcion.value = inputCategoria.value.trim() || 'Gasto General';
         }
 
         btnGuardarGasto.disabled = true;
@@ -981,9 +977,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const filaSin = document.getElementById('filaSinGastos');
             if (filaSin) filaSin.remove();
 
-            data.gastos.forEach(g => {
-                insertarFilaGasto(g);
-            });
+            if (data.gastos && data.gastos.length > 0) {
+                data.gastos.forEach(g => {
+                    insertarFilaGasto(g);
+                });
+            }
 
             mostrarToast(data.message || 'Gasto registrado correctamente.', 'success');
 
@@ -996,6 +994,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 seccionModoSimple.classList.remove('d-none');
                 seccionModoAvanzado.classList.add('d-none');
                 inputMonto.setAttribute('required', 'required');
+                inputMonto.disabled = false;
+                inputMetodoPago.disabled = false;
+                contenedorLineasMultiples.querySelectorAll('input, select').forEach(el => el.disabled = true);
             }
 
             // Recalcular contador y filtro actual

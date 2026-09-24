@@ -35,7 +35,7 @@
         <button type="button" class="btn btn-outline-dark rounded-pill px-3 fw-bold" onclick="window.print()">
             <i class="fa-solid fa-print me-1"></i> Imprimir
         </button>
-        <a href="{{ url_for('admin_bp.maneos', cliente_id=cliente.id) }}" class="btn btn-blue rounded-pill px-4 fw-bold shadow-sm">
+        <a href="{{ url_for('maneos_bp.index') }}" class="btn btn-blue rounded-pill px-4 fw-bold shadow-sm">
             <i class="fa-solid fa-handshake me-1"></i> Prestar Maneo
         </a>
     </div>
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
-            <form method="POST" action="{{ url_for('admin_bp.maneos_facturar', id=m.id) }}">
+            <form method="POST" action="{{ url_for('maneos_bp.facturar', id=m.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="origen" value="estado_cuenta">
                 <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
-            <form method="POST" action="{{ url_for('admin_bp.maneos_devolver', id=m.id) }}">
+            <form method="POST" action="{{ url_for('maneos_bp.devolver', id=m.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="origen" value="estado_cuenta">
                 <input type="hidden" name="cliente_id" value="{{ cliente.id }}">

@@ -73,7 +73,7 @@
 <!-- Formulario para Nuevo Maneo -->
 <div class="card card-custom p-4 mb-4">
     <h5 class="text-brand-black fw-bold mb-3"><i class="fa-solid fa-box-open text-brand-blue me-2"></i>Registrar Nuevo Maneo</h5>
-    <form method="POST" action="{{ url_for('admin_bp.maneos_prestar') }}" id="formNuevoManeo">
+    <form method="POST" action="{{ url_for('maneos_bp.prestar') }}" id="formNuevoManeo">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
         <datalist id="productos_list">
@@ -284,7 +284,7 @@
                                 <div class="modal fade text-start" id="facturarModal{{ m.id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content border-0 shadow">
-                                            <form method="POST" action="{{ url_for('admin_bp.maneos_facturar', id=m.id) }}">
+                                            <form method="POST" action="{{ url_for('maneos_bp.facturar', id=m.id) }}">
                                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                                 <div class="modal-header border-0 bg-light">
                                                     <h5 class="modal-title fw-bold text-success"><i class="fa-solid fa-sack-dollar me-2"></i>Facturar Maneo</h5>
@@ -341,7 +341,7 @@
                                 <div class="modal fade text-start" id="devolverModal{{ m.id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered modal-sm">
                                         <div class="modal-content border-0 shadow">
-                                            <form method="POST" action="{{ url_for('admin_bp.maneos_devolver', id=m.id) }}">
+                                            <form method="POST" action="{{ url_for('maneos_bp.devolver', id=m.id) }}">
                                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                                 <div class="modal-header border-0 bg-light">
                                                     <h5 class="modal-title fw-bold text-secondary"><i class="fa-solid fa-rotate-left me-2"></i>Devolver Unidades</h5>
