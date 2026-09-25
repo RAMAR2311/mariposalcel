@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Maripocell - Accesorios & Tecnología{% endblock %}</title>
     <!-- Favicon y PWA Manifest -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocelll_v3">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocelll_v3">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocelll_v3">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocelll_v3">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocelll_v3">
-    <link rel="manifest" href="/manifest.json?v=maripocelll_v3">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocell_v3">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocell_v3">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocell_v3">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocell_v3">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocell_v3">
+    <link rel="manifest" href="/manifest.json?v=maripocell_v3">
     
     <!-- Meta tags PWA para Android, iOS y Navegadores Modernos -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,8 +18,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Maripocell">
     <meta name="application-name" content="Maripocell">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocelll_v3">
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=maripocelll_v3">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocell_v3">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=maripocell_v3">
     <meta name="theme-color" content="#D4AF37">
 
     <!-- Google Fonts: Montserrat, Poppins, Inter, Roboto -->
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* =========================================================
-           MARIPOSACEL DESIGN SYSTEM: TECH LIGHT THEME
+           MARIPOCELL DESIGN SYSTEM: TECH LIGHT THEME
            Canvas Base: #FFFFFF (Blanco Puro)
            Cards / Containers: #FBFBFC, Bordes #E5E7EB
            Color Primario: #D4AF37 / #E5B842 (Oro Metálico Tech)
@@ -117,7 +117,7 @@
         .text-brand-pink { color: var(--brand-primary) !important; font-weight: 700; }
         .badge-accent { background-color: var(--brand-accent) !important; color: #FFFFFF !important; font-weight: 600; }
 
-        /* Navbar Clean White para Mariposacel */
+        /* Navbar Clean White para Maripocell */
         .navbar-custom {
             background-color: #FFFFFF !important;
             border-bottom: 2px solid var(--brand-border);
@@ -256,7 +256,7 @@
             font-weight: 600;
         }
 
-        /* Sidebar Offcanvas Estilos Premium (Mariposacel Tech Luxury Theme) */
+        /* Sidebar Offcanvas Estilos Premium (Maripocell Tech Luxury Theme) */
         .offcanvas {
             background: #FFFFFF !important;
             color: var(--brand-text) !important;
@@ -515,7 +515,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Navbar MARIPOSACEL -->
+    <!-- Navbar MARIPOCELL -->
     <nav class="navbar navbar-custom mb-4 mb-md-5">
         <div class="container-fluid px-2 px-md-3 d-flex align-items-center justify-content-between">
             
@@ -533,7 +533,7 @@
             <!-- Columna Centro: Brand Logo (Maripocell) -->
             <div class="d-flex justify-content-center flex-grow-1 px-1 px-sm-2 text-center overflow-hidden">
                 <a class="navbar-brand d-inline-flex align-items-center fw-bold m-0 text-nowrap" href="{{ url_for('index') }}" style="letter-spacing: 1.5px; font-size: clamp(1.3rem, 4vw, 1.7rem); font-family: var(--font-display);">
-                    <img src="{{ url_for('static', filename='img/Maripocelll.png') }}" alt="Maripocell Logo" class="me-2 rounded-2" style="width: 38px; height: 38px; object-fit: contain;">
+                    <img src="{{ url_for('static', filename='img/Maripocell.png') }}" alt="Maripocell Logo" class="me-2 rounded-2" style="width: 38px; height: 38px; object-fit: contain;">
                     <span style="color: #111827; font-weight: 900;">Maripocell</span>
                     <span class="navbar-brand-tech small ms-2 px-2 py-0 rounded" style="color: #926C09; font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.4); background-color: rgba(212, 175, 55, 0.08); letter-spacing: 1px;">ACCESORIOS & TECNOLOGÍA</span>
                 </a>

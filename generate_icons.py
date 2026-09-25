@@ -7,8 +7,8 @@ def generate_all_icons(source_path=None):
         potential_sources = [
             'static/img/Maripocell.png',
             'static/img/Maripocell_wide.png',
-            'static/img/Maripocel.png',
-            'static/img/Mariposacel.png'
+            'static/img/Maripocell.png',
+            'static/img/Maripocell.png'
         ]
         for p in potential_sources:
             if os.path.exists(p):
@@ -56,8 +56,8 @@ def generate_all_icons(source_path=None):
     
     cropped.save("static/img/Maripocell_wide.png")
     square_logo.save("static/img/Maripocell.png")
-    square_logo.save("static/img/Maripocel.png")
-    square_logo.save("static/img/Mariposacel.png")
+    square_logo.save("static/img/Maripocell.png")
+    square_logo.save("static/img/Maripocell.png")
 
     square_logo.resize((512, 512), Image.Resampling.LANCZOS).save("static/img/icons/icon-512x512.png")
     square_logo.resize((192, 192), Image.Resampling.LANCZOS).save("static/img/icons/icon-192x192.png")
