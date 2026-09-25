@@ -311,15 +311,15 @@ if __name__ == '__main__':
         # Crear la carpeta de imágenes si no existe
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
         
-        if not User.query.filter_by(email='admin@mariposacel.com').first():
+        if not User.query.filter(User.email.in_(['admin@maripocel.com', 'admin@mariposacel.com'])).first():
             master_admin = User(
                 nombre='Administrador Principal',
-                email='admin@mariposacel.com',
+                email='admin@maripocel.com',
                 password_hash=generate_password_hash('Admin123'),
                 rol='admin'
             )
             db.session.add(master_admin)
             db.session.commit()
-            print("[INFO] Usuario maestro 'admin@mariposacel.com' fue creado automaticamente.")
+            print("[INFO] Usuario maestro 'admin@maripocel.com' fue creado automaticamente.")
             
     app.run(debug=True)

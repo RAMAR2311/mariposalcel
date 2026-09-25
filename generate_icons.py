@@ -1,111 +1,78 @@
-import math
-from PIL import Image, ImageDraw
+import os
+from PIL import Image
+import numpy as np
 
-def render_mariposa_icon(size=512):
-    # Canvas blanco puro
-    img = Image.new("RGBA", (size, size), (255, 255, 255, 255))
-    draw = ImageDraw.Draw(img)
-    
-    # Borde sutil #E5E7EB
-    pad = int(size * 0.04)
-    r = int(size * 0.18)
-    draw.rounded_rectangle([pad, pad, size - pad, size - pad], radius=r, outline=(229, 231, 235, 255), width=int(size * 0.015))
-    
-    # Centro geométrico del icono
-    cx = size / 2.0
-    cy = size / 2.0
-    s = size / 512.0 # Escalar respecto a 512
-    
-    # Paleta de Colores
-    gold_main = (212, 175, 55, 255)       # #D4AF37
-    gold_light = (243, 208, 121, 255)     # #F3D079
-    gold_dark = (184, 144, 40, 255)       # #B89028
-    amber = (215, 168, 110, 255)          # #D7A86E
-    graphite = (31, 31, 31, 255)          # #1F1F1F
-    
-    # Cuerpo Central Geométrico (Grafito Tech)
-    body_points = [
-        (cx, cy - 80 * s),
-        (cx + 8 * s, cy - 20 * s),
-        (cx + 10 * s, cy + 50 * s),
-        (cx, cy + 90 * s),
-        (cx - 10 * s, cy + 50 * s),
-        (cx - 8 * s, cy - 20 * s),
-    ]
-    draw.polygon(body_points, fill=graphite)
-    
-    # Cabeza (círculo / rombo tech grafito)
-    draw.ellipse([cx - 10 * s, cy - 105 * s, cx + 10 * s, cy - 85 * s], fill=graphite)
-    
-    # Antenas minimalistas geométricas en oro
-    draw.line([(cx - 3 * s, cy - 98 * s), (cx - 30 * s, cy - 135 * s)], fill=gold_dark, width=int(4 * s))
-    draw.line([(cx + 3 * s, cy - 98 * s), (cx + 30 * s, cy - 135 * s)], fill=gold_dark, width=int(4 * s))
-    draw.ellipse([cx - 35 * s, cy - 140 * s, cx - 25 * s, cy - 130 * s], fill=gold_main)
-    draw.ellipse([cx + 25 * s, cy - 140 * s, cx + 35 * s, cy - 130 * s], fill=gold_main)
-    
-    # --- Alas Superiores Geométricas (Facetadas estilo Origami / Tech) ---
-    # Ala Derecha Superior
-    wing_tr_1 = [(cx + 10 * s, cy - 20 * s), (cx + 155 * s, cy - 120 * s), (cx + 175 * s, cy - 40 * s), (cx + 10 * s, cy + 10 * s)]
-    wing_tr_2 = [(cx + 10 * s, cy - 20 * s), (cx + 155 * s, cy - 120 * s), (cx + 100 * s, cy - 145 * s), (cx + 4 * s, cy - 65 * s)]
-    wing_tr_3 = [(cx + 10 * s, cy + 10 * s), (cx + 175 * s, cy - 40 * s), (cx + 140 * s, cy + 30 * s), (cx + 8 * s, cy + 40 * s)]
-    
-    draw.polygon(wing_tr_2, fill=gold_light)
-    draw.polygon(wing_tr_1, fill=gold_main)
-    draw.polygon(wing_tr_3, fill=amber)
-    
-    # Ala Izquierda Superior (Espejo simétrico perfecto)
-    wing_tl_1 = [(cx - 10 * s, cy - 20 * s), (cx - 155 * s, cy - 120 * s), (cx - 175 * s, cy - 40 * s), (cx - 10 * s, cy + 10 * s)]
-    wing_tl_2 = [(cx - 10 * s, cy - 20 * s), (cx - 155 * s, cy - 120 * s), (cx - 100 * s, cy - 145 * s), (cx - 4 * s, cy - 65 * s)]
-    wing_tl_3 = [(cx - 10 * s, cy + 10 * s), (cx - 175 * s, cy - 40 * s), (cx - 140 * s, cy + 30 * s), (cx - 8 * s, cy + 40 * s)]
-    
-    draw.polygon(wing_tl_2, fill=gold_light)
-    draw.polygon(wing_tl_1, fill=gold_main)
-    draw.polygon(wing_tl_3, fill=amber)
-    
-    # --- Alas Inferiores Geométricas ---
-    # Ala Derecha Inferior
-    wing_br_1 = [(cx + 8 * s, cy + 25 * s), (cx + 130 * s, cy + 40 * s), (cx + 100 * s, cy + 125 * s), (cx + 5 * s, cy + 70 * s)]
-    wing_br_2 = [(cx + 5 * s, cy + 70 * s), (cx + 100 * s, cy + 125 * s), (cx + 45 * s, cy + 145 * s), (cx + 2 * s, cy + 85 * s)]
-    draw.polygon(wing_br_1, fill=gold_main)
-    draw.polygon(wing_br_2, fill=gold_dark)
-    
-    # Ala Izquierda Inferior (Espejo)
-    wing_bl_1 = [(cx - 8 * s, cy + 25 * s), (cx - 130 * s, cy + 40 * s), (cx - 100 * s, cy + 125 * s), (cx - 5 * s, cy + 70 * s)]
-    wing_bl_2 = [(cx - 5 * s, cy + 70 * s), (cx - 100 * s, cy + 125 * s), (cx - 45 * s, cy + 145 * s), (cx - 2 * s, cy + 85 * s)]
-    draw.polygon(wing_bl_1, fill=gold_main)
-    draw.polygon(wing_bl_2, fill=gold_dark)
-    
-    # Líneas divisorias internas tech sutiles
-    line_col = (255, 255, 255, 180)
-    lw = max(1, int(2 * s))
-    draw.line([(cx + 10 * s, cy - 20 * s), (cx + 155 * s, cy - 120 * s)], fill=line_col, width=lw)
-    draw.line([(cx - 10 * s, cy - 20 * s), (cx - 155 * s, cy - 120 * s)], fill=line_col, width=lw)
-    draw.line([(cx + 10 * s, cy + 10 * s), (cx + 175 * s, cy - 40 * s)], fill=line_col, width=lw)
-    draw.line([(cx - 10 * s, cy + 10 * s), (cx - 175 * s, cy - 40 * s)], fill=line_col, width=lw)
-    draw.line([(cx + 8 * s, cy + 25 * s), (cx + 100 * s, cy + 125 * s)], fill=line_col, width=lw)
-    draw.line([(cx - 8 * s, cy + 25 * s), (cx - 100 * s, cy + 125 * s)], fill=line_col, width=lw)
+def generate_all_icons(source_path=None):
+    if source_path is None:
+        # Check standard paths
+        potential_sources = [
+            'static/img/Maripocel_raw.png',
+            'static/img/Maripocel.png',
+            'static/img/Mariposacel.png'
+        ]
+        for p in potential_sources:
+            if os.path.exists(p):
+                source_path = p
+                break
 
-    return img
+    if not source_path or not os.path.exists(source_path):
+        print("No se encontró imagen fuente para generar iconos.")
+        return
 
-# Generar y guardar todas las resoluciones necesarias
-base_img = render_mariposa_icon(512)
-base_img.save("static/img/icons/icon-512x512.png")
+    img = Image.open(source_path).convert('RGBA')
+    arr = np.array(img)
 
-icon_192 = render_mariposa_icon(192)
-icon_192.save("static/img/icons/icon-192x192.png")
+    # Clean white background: if RGB is very close to white (all >= 250), ensure pure white
+    rgb = arr[:, :, :3]
+    mask_bg = np.all(rgb >= 250, axis=2)
+    arr[mask_bg, 0] = 255
+    arr[mask_bg, 1] = 255
+    arr[mask_bg, 2] = 255
+    arr[mask_bg, 3] = 255
+    cleaned_img = Image.fromarray(arr)
 
-icon_180 = render_mariposa_icon(180)
-icon_180.save("static/img/icons/apple-touch-icon.png")
+    # Content bounding box
+    mask_fg = np.any(arr[:, :, :3] < 250, axis=2)
+    coords = np.argwhere(mask_fg)
+    if len(coords) > 0:
+        y0, x0 = coords.min(axis=0)
+        y1, x1 = coords.max(axis=0)
+        pad = 20
+        crop_x0 = max(0, x0 - pad)
+        crop_y0 = max(0, y0 - pad)
+        crop_x1 = min(img.width, x1 + pad)
+        crop_y1 = min(img.height, y1 + pad)
+        cropped = cleaned_img.crop((crop_x0, crop_y0, crop_x1, crop_y1))
+    else:
+        cropped = cleaned_img
 
-icon_48 = render_mariposa_icon(48)
-icon_48.save("static/img/icons/favicon-48x48.png")
+    # Square canvas with padding for icons
+    w, h = cropped.size
+    max_dim = max(w, h)
+    target_dim = int(max_dim / (1 - 2 * 0.08))
+    square_logo = Image.new('RGBA', (target_dim, target_dim), (255, 255, 255, 255))
+    offset_x = (target_dim - w) // 2
+    offset_y = (target_dim - h) // 2
+    square_logo.paste(cropped, (offset_x, offset_y), cropped)
 
-icon_32 = render_mariposa_icon(32)
-icon_32.save("static/img/icons/favicon-32x32.png")
+    os.makedirs("static/img/icons", exist_ok=True)
+    
+    # Save standard logos
+    cropped.save("static/img/Maripocel_wide.png")
+    square_logo.save("static/img/Maripocel.png")
+    square_logo.save("static/img/Mariposacel.png")
 
-icon_16 = render_mariposa_icon(16)
-icon_16.save("static/img/icons/favicon-16x16.png")
+    # Generate icons
+    square_logo.resize((512, 512), Image.Resampling.LANCZOS).save("static/img/icons/icon-512x512.png")
+    square_logo.resize((192, 192), Image.Resampling.LANCZOS).save("static/img/icons/icon-192x192.png")
+    square_logo.resize((180, 180), Image.Resampling.LANCZOS).save("static/img/icons/apple-touch-icon.png")
+    square_logo.resize((48, 48), Image.Resampling.LANCZOS).save("static/img/icons/favicon-48x48.png")
+    square_logo.resize((32, 32), Image.Resampling.LANCZOS).save("static/img/icons/favicon-32x32.png")
+    square_logo.resize((16, 16), Image.Resampling.LANCZOS).save("static/img/icons/favicon-16x16.png")
 
-# Favicon .ico
-base_img.save("static/favicon.ico", format='ICO', sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
-print("Iconos PWA e Isotipo Mariposacel generados con éxito.")
+    # Favicon ICO
+    square_logo.save("static/favicon.ico", format='ICO', sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
+    print("Iconos PWA e Isotipo Maripocel generados con éxito.")
+
+if __name__ == "__main__":
+    generate_all_icons()
