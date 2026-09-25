@@ -1,4 +1,8 @@
-from flask import Blueprint, request, jsonify, flash, redirect, render_template, abort, url_for
+import os
+import uuid
+import time
+from werkzeug.utils import secure_filename
+from flask import Blueprint, request, jsonify, flash, redirect, render_template, abort, url_for, current_app
 from flask_login import login_required, current_user
 from models import db, Product, ProductVariant, Sale, SaleDetail, SalePayment, Expense, obtener_hora_bogota, ArqueoCaja, PriceApproval
 from decorators import admin_required
@@ -741,26 +745,100 @@ def editar_pago(sale_id):
         
     return redirect(url_for('sales_bp.historial', fecha_inicio=fecha_inicio, fecha_fin=fecha_fin))
 
-# Endpoint Catálogo Estricto de solo vista para Operarios
 @sales_bp.route('/catalogo', methods=['GET'])
 @login_required 
 def catalogo():
     query_str = request.args.get('q', '').strip()
+    filtro_foto = request.args.get('foto', 'todos').strip()
     
+    # Base query de productos de tienda
+    base_query = Product.query.filter(Product.tipo_inventario == 'tienda')
+    
+    # Contadores estadísticos para los botones de filtro
+    total_tienda = base_query.count()
+    total_con_foto = base_query.filter(Product.imagen.isnot(None), Product.imagen != '').count()
+    total_sin_foto = total_tienda - total_con_foto
+    
+    # Filtro de texto por SKU o Nombre
     if query_str:
-        # Motor de similitud Case-Insensitive (Like)
         search_term = f"%{query_str}%"
-        productos = Product.query.filter(Product.tipo_inventario == 'tienda').filter(
+        base_query = base_query.filter(
             or_(
                 Product.sku.ilike(search_term), 
                 Product.nombre.ilike(search_term)
             )
-        ).limit(50).all()
-    else:
-        # Límite pasivo de 50 ítems para ahorrar memoria RAM de BD en carga inicial
-        productos = Product.query.filter(Product.tipo_inventario == 'tienda').limit(50).all()
+        )
         
-    return render_template('sales/catalogo.html', productos=productos, q=query_str)
+    # Filtro por estado de foto
+    if filtro_foto == 'con_foto':
+        base_query = base_query.filter(Product.imagen.isnot(None), Product.imagen != '')
+    elif filtro_foto == 'sin_foto':
+        base_query = base_query.filter(or_(Product.imagen.is_(None), Product.imagen == ''))
+        
+    productos = base_query.order_by(Product.nombre.asc()).all()
+        
+    return render_template(
+        'sales/catalogo.html', 
+        productos=productos, 
+        q=query_str,
+        filtro_foto=filtro_foto,
+        total_tienda=total_tienda,
+        total_con_foto=total_con_foto,
+        total_sin_foto=total_sin_foto
+    )
+
+@sales_bp.route('/catalogo/cambiar_foto/<int:id>', methods=['POST'])
+@login_required
+def cambiar_foto_catalogo(id):
+    producto = Product.query.get_or_404(id)
+    q = request.form.get('q', '')
+    foto = request.form.get('foto', 'todos')
+    
+    if 'imagen' not in request.files:
+        flash('No se seleccionó ningún archivo de imagen.', 'warning')
+        return redirect(url_for('sales_bp.catalogo', q=q, foto=foto))
+        
+    file = request.files['imagen']
+    if not file or file.filename == '':
+        flash('Por favor selecciona una foto para subir.', 'warning')
+        return redirect(url_for('sales_bp.catalogo', q=q, foto=foto))
+        
+    sec_name = secure_filename(file.filename)
+    ext = sec_name.rsplit('.', 1)[-1].lower() if '.' in sec_name else ''
+    allowed_exts = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
+    if ext not in allowed_exts:
+        flash('Formato no permitido. Formatos válidos: PNG, JPG, JPEG, WEBP.', 'danger')
+        return redirect(url_for('sales_bp.catalogo', q=q, foto=foto))
+        
+    try:
+        os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
+        unique_name = f"prod_{producto.id}_{uuid.uuid4().hex[:8]}_{int(time.time())}.{ext}"
+        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], unique_name))
+        producto.imagen = unique_name
+        db.session.commit()
+        flash(f'¡Foto de "{producto.nombre}" actualizada con éxito!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al guardar la imagen: {str(e)}', 'danger')
+        
+    return redirect(url_for('sales_bp.catalogo', q=q, foto=foto))
+
+@sales_bp.route('/catalogo/eliminar_foto/<int:id>', methods=['POST'])
+@login_required
+def eliminar_foto_catalogo(id):
+    producto = Product.query.get_or_404(id)
+    q = request.form.get('q', '')
+    foto = request.form.get('foto', 'todos')
+    
+    try:
+        producto.imagen = None
+        db.session.commit()
+        flash(f'Foto de "{producto.nombre}" eliminada correctamente.', 'info')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al eliminar la foto: {str(e)}', 'danger')
+        
+    return redirect(url_for('sales_bp.catalogo', q=q, foto=foto))
 
 @sales_bp.route('/caja_visual', methods=['GET'])
 @login_required

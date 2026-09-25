@@ -1,30 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-5">
+<div class="row mb-4">
     <div class="col-12">
-        <!-- Titular Simple y Limpio, el color de marca A3D8DE acentúa el Logo -->
         <h2 class="fw-bolder m-0" style="color: var(--brand-blue);">
             <i class="fa-solid fa-book-open me-2"></i>Catálogo de Stock General
         </h2>
+        <p class="text-muted small mt-1 mb-0">Explora el inventario, consulta existencias y actualiza las fotos de los productos en tiempo real.</p>
     </div>
 </div>
 
-<div class="card card-custom p-4 border mt-2 bg-white shadow-sm mb-4">
-    <!-- El Formulario usa Método GET Nativo para enviar 'q' por barra de direcciones URL -->
-    <form method="GET" action="{{ url_for('sales_bp.catalogo') }}" class="row align-items-end g-3">
+<div class="card card-custom p-4 border bg-white shadow-sm mb-4">
+    <!-- Formulario de Búsqueda -->
+    <form method="GET" action="{{ url_for('sales_bp.catalogo') }}" class="row align-items-end g-3 mb-3">
+        <input type="hidden" name="foto" value="{{ filtro_foto }}">
         <div class="col-md-9">
             <label class="form-label fw-bold text-brand-black small"><i class="fa-solid fa-magnifying-glass me-1"></i> Búsqueda de Artículos</label>
-            <!-- Permite filtrado profundo en la BD por Substraer Coincidencias (ILIKE) -->
-            <input type="text" name="q" class="form-control bg-light border-0 py-2 shadow-sm" value="{{ q }}" placeholder="Busca escribiendo el SKU Oficial o el Nombre del accesorio..." autocomplete="off">
+            <input type="text" name="q" class="form-control bg-light border-0 py-2 shadow-sm" value="{{ q }}" placeholder="Busca por SKU Oficial o Nombre del accesorio..." autocomplete="off">
         </div>
         <div class="col-md-3">
-            <!-- Botón de acción con estilo Maripocell -->
             <button type="submit" class="btn btn-blue w-100 py-2 rounded-3 shadow-sm fw-bold">
                 Buscar Existencias
             </button>
         </div>
     </form>
+
+    <!-- Filtros Rápidos de Foto -->
+    <div class="d-flex flex-wrap gap-2 pt-2 border-top">
+        <a href="{{ url_for('sales_bp.catalogo', q=q, foto='todos') }}" 
+           class="btn btn-sm rounded-pill px-3 fw-bold {% if filtro_foto == 'todos' or not filtro_foto %}btn-dark{% else %}btn-outline-secondary border-0 bg-light text-dark{% endif %}">
+            <i class="fa-solid fa-layer-group me-1"></i> Todos
+            <span class="badge bg-secondary ms-1 rounded-pill">{{ total_tienda }}</span>
+        </a>
+        <a href="{{ url_for('sales_bp.catalogo', q=q, foto='con_foto') }}" 
+           class="btn btn-sm rounded-pill px-3 fw-bold {% if filtro_foto == 'con_foto' %}btn-success text-white{% else %}btn-outline-secondary border-0 bg-light text-dark{% endif %}">
+            <i class="fa-solid fa-circle-check text-success me-1 {% if filtro_foto == 'con_foto' %}text-white{% endif %}"></i> Con Foto
+            <span class="badge {% if filtro_foto == 'con_foto' %}bg-white text-success{% else %}bg-success text-white{% endif %} ms-1 rounded-pill">{{ total_con_foto }}</span>
+        </a>
+        <a href="{{ url_for('sales_bp.catalogo', q=q, foto='sin_foto') }}" 
+           class="btn btn-sm rounded-pill px-3 fw-bold {% if filtro_foto == 'sin_foto' %}btn-warning text-dark{% else %}btn-outline-secondary border-0 bg-light text-dark{% endif %}">
+            <i class="fa-solid fa-triangle-exclamation text-warning me-1 {% if filtro_foto == 'sin_foto' %}text-dark{% endif %}"></i> Sin Foto (Pendientes)
+            <span class="badge {% if filtro_foto == 'sin_foto' %}bg-dark text-white{% else %}bg-warning text-dark{% endif %} ms-1 rounded-pill">{{ total_sin_foto }}</span>
+        </a>
+        {% if q %}
+            <a href="{{ url_for('sales_bp.catalogo', foto=filtro_foto) }}" class="btn btn-sm btn-link text-danger text-decoration-none ms-auto align-self-center">
+                <i class="fa-solid fa-xmark me-1"></i> Limpiar Búsqueda
+            </a>
+        {% endif %}
+    </div>
 </div>
 
 <style>
@@ -35,7 +58,12 @@
     .card { page-break-inside: avoid; border: 1px solid #e0e0e0 !important; box-shadow: none !important; }
     .print-friendly-row { gap: 1rem !important; }
     .col-md-4, .col-xl-3 { flex: 0 0 auto !important; width: 33.333% !important; } 
-    /* Force 3 columns in print */
+}
+.btn-hover-scale {
+    transition: transform 0.15s ease-in-out;
+}
+.btn-hover-scale:hover {
+    transform: scale(1.08);
 }
 </style>
 
@@ -43,13 +71,31 @@
     {% for p in productos %}
     <div class="col">
         <div class="card h-100 border-0 shadow-sm {% if p.total_stock <= 0 %}opacity-50{% endif %}" style="border-radius: 12px; overflow: hidden;">
-            {% if p.imagen %}
-                <img src="{{ url_for('static', filename='uploads/' ~ p.imagen) }}" class="card-img-top bg-light" alt="{{ p.nombre }}" style="height: 220px; object-fit: contain; padding: 1.5rem;">
-            {% else %}
-                <div class="card-img-top bg-light d-flex align-items-center justify-content-center border-bottom border-light" style="height: 220px;">
-                    <i class="fa-solid fa-image fa-3x text-muted opacity-25"></i>
-                </div>
-            {% endif %}
+            <div class="position-relative bg-light border-bottom border-light" style="height: 220px;">
+                {% if p.imagen %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ p.imagen) }}" class="card-img-top w-100 h-100" alt="{{ p.nombre }}" style="object-fit: contain; padding: 1.25rem;">
+                    
+                    <!-- Botón Flotante para Cambiar Foto -->
+                    <button type="button" 
+                            class="btn btn-sm btn-light border shadow-sm position-absolute top-0 end-0 m-2 rounded-circle btn-hover-scale d-flex align-items-center justify-content-center" 
+                            style="width: 38px; height: 38px; z-index: 5; background-color: rgba(255,255,255,0.95);"
+                            title="Cambiar o actualizar foto"
+                            onclick="abrirModalFoto({{ p.id }}, '{{ p.nombre|replace("'", "\\'") }}', '{{ p.sku }}', '{{ url_for('static', filename='uploads/' ~ p.imagen) }}')">
+                        <i class="fa-solid fa-camera text-primary" style="font-size: 1rem;"></i>
+                    </button>
+                {% else %}
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100 p-3 text-center">
+                        <i class="fa-solid fa-image fa-3x text-muted opacity-25 mb-2"></i>
+                        <span class="badge bg-secondary-subtle text-secondary mb-2 small">Sin foto</span>
+                        <!-- Botón Directo para Subir Foto -->
+                        <button type="button" 
+                                class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1 fw-bold btn-hover-scale shadow-sm"
+                                onclick="abrirModalFoto({{ p.id }}, '{{ p.nombre|replace("'", "\\'") }}', '{{ p.sku }}', '')">
+                            <i class="fa-solid fa-cloud-arrow-up me-1"></i> Subir Foto
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
             
             <div class="card-body d-flex flex-column p-4">
                 <div class="d-flex justify-content-between align-items-start mb-1">
@@ -107,8 +153,111 @@
     <div class="col-12 text-center py-5 bg-white border rounded shadow-sm">
         <i class="fa-solid fa-box-open fs-1 mb-3 text-muted opacity-25"></i>
         <h4 class="text-brand-black fw-bold">No se hallaron resultados</h4>
-        <p class="text-muted mb-0">No pudimos localizar artículos físicos con esos atributos de búsqueda.</p>
+        <p class="text-muted mb-0">No pudimos localizar artículos con los filtros y criterios seleccionados.</p>
     </div>
     {% endfor %}
 </div>
+
+<!-- Modal para Cambiar / Subir Foto de Producto -->
+<div class="modal fade" id="modalFotoProducto" tabindex="-1" aria-labelledby="modalFotoProductoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4 overflow-hidden">
+            <div class="modal-header bg-light border-bottom">
+                <h5 class="modal-title fw-bold text-brand-black" id="modalFotoProductoLabel">
+                    <i class="fa-solid fa-camera text-primary me-2"></i>Foto del Producto
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="text-center mb-3">
+                    <h6 class="fw-bold mb-1 text-brand-black" id="modalProdNombre"></h6>
+                    <span class="badge bg-light text-secondary border px-2 py-1" id="modalProdSku"></span>
+                </div>
+                
+                <!-- Previsualización -->
+                <div class="card bg-light border-0 rounded-3 p-3 mb-3 text-center d-flex align-items-center justify-content-center" style="min-height: 200px; max-height: 240px;">
+                    <img id="modalPreviewImg" src="" alt="Vista previa" class="img-fluid rounded" style="max-height: 190px; object-fit: contain; display: none;">
+                    <div id="modalNoImgPlaceholder" class="text-muted text-center py-4">
+                        <i class="fa-solid fa-image fa-3x mb-2 opacity-25"></i>
+                        <p class="small mb-0">Sin imagen asignada</p>
+                    </div>
+                </div>
+
+                <!-- Formulario de Subida -->
+                <form id="formCambiarFoto" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="q" value="{{ q }}">
+                    <input type="hidden" name="foto" value="{{ filtro_foto }}">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-muted">Selecciona o toma una foto nueva:</label>
+                        <input type="file" name="imagen" id="inputFotoArchivo" class="form-control" accept="image/*" required onchange="previewSelectedImage(this)">
+                        <div class="form-text small">Formatos permitidos: JPG, PNG, WEBP.</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-blue py-2 fw-bold rounded-3">
+                            <i class="fa-solid fa-cloud-arrow-up me-1"></i> Guardar Foto
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Botón para Quitar Foto -->
+                <form id="formEliminarFoto" method="POST" class="mt-2 text-center" style="display: none;" onsubmit="return confirm('¿Seguro que deseas quitar la foto actual de este producto?');">
+                    <input type="hidden" name="q" value="{{ q }}">
+                    <input type="hidden" name="foto" value="{{ filtro_foto }}">
+                    <button type="submit" class="btn btn-link text-danger btn-sm text-decoration-none">
+                        <i class="fa-solid fa-trash-can me-1"></i> Eliminar foto actual
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function abrirModalFoto(id, nombre, sku, imgUrl) {
+    document.getElementById('modalProdNombre').innerText = nombre;
+    document.getElementById('modalProdSku').innerText = 'SKU: ' + sku;
+    
+    const formCambiar = document.getElementById('formCambiarFoto');
+    formCambiar.action = '/sales/catalogo/cambiar_foto/' + id;
+    
+    const formEliminar = document.getElementById('formEliminarFoto');
+    formEliminar.action = '/sales/catalogo/eliminar_foto/' + id;
+    
+    const preview = document.getElementById('modalPreviewImg');
+    const placeholder = document.getElementById('modalNoImgPlaceholder');
+    const input = document.getElementById('inputFotoArchivo');
+    input.value = '';
+    
+    if (imgUrl && imgUrl.trim() !== '') {
+        preview.src = imgUrl;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+        formEliminar.style.display = 'block';
+    } else {
+        preview.src = '';
+        preview.style.display = 'none';
+        placeholder.style.display = 'block';
+        formEliminar.style.display = 'none';
+    }
+    
+    const modalEl = document.getElementById('modalFotoProducto');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+}
+
+function previewSelectedImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('modalPreviewImg');
+            const placeholder = document.getElementById('modalNoImgPlaceholder');
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 {% endblock %}

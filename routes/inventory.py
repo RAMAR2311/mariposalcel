@@ -1,4 +1,6 @@
 import os
+import uuid
+import time
 from werkzeug.utils import secure_filename
 from flask import current_app, Blueprint, render_template, request, redirect, url_for, flash, abort, send_file, jsonify
 from flask_login import login_required, current_user
@@ -82,8 +84,11 @@ def nuevo():
         if 'imagen' in request.files:
             file = request.files['imagen']
             if file and file.filename != '':
-                filename = secure_filename(file.filename)
+                sec_name = secure_filename(file.filename)
+                ext = sec_name.rsplit('.', 1)[-1].lower() if '.' in sec_name else 'jpg'
+                filename = f"prod_{uuid.uuid4().hex[:8]}_{int(time.time())}.{ext}"
                 try:
+                    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
                     file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                     imagen_filename = filename
                 except OSError as e:
@@ -181,23 +186,19 @@ def editar_producto(id):
         stock_total_anterior = producto.total_stock
         
         # Actualizar Imagen si se sube una nueva
-        print("DEBUG: Processing POST request for /editar/" + str(id))
         if 'imagen' in request.files:
             file = request.files['imagen']
-            print("DEBUG: 'imagen' found in request.files. filename:", file.filename)
             if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                print("DEBUG: secure_filename is:", filename)
+                sec_name = secure_filename(file.filename)
+                ext = sec_name.rsplit('.', 1)[-1].lower() if '.' in sec_name else 'jpg'
+                filename = f"prod_{producto.id}_{uuid.uuid4().hex[:8]}_{int(time.time())}.{ext}"
                 try:
+                    os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
                     file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    print("DEBUG: file saved successfully to:", os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                     producto.imagen = filename
                 except OSError as e:
-                    print("DEBUG: OSError saving file:", e)
                     flash(f'Error al guardar la imagen (Revisa permisos o la ruta en el VPS): {str(e)}', 'danger')
                     return redirect(url_for('inventory_bp.editar_producto', id=id))
-        else:
-            print("DEBUG: 'imagen' NOT found in request.files")
                 
                 
         # Datos básicos con validación de SKU único
