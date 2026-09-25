@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket de Compra #{{ venta.id }} - Maripocel</title>
+    <title>Ticket de Compra #{{ venta.id }} - Maripocell</title>
     <!-- Open Graph Meta Tags para Previsualización Rica en WhatsApp / Redes Sociales -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Maripocel - Recibo Digital #{{ venta.id }}">
-    <meta property="og:description" content="Comprobante de compra oficial de Maripocel - Accesorios & Tecnología. Total: ${{ (venta.monto_total)|cop }} COP">
+    <meta property="og:title" content="Maripocell - Recibo Digital #{{ venta.id }}">
+    <meta property="og:description" content="Comprobante de compra oficial de Maripocell - Accesorios & Tecnología. Total: ${{ (venta.monto_total)|cop }} COP">
     <meta property="og:image" content="{{ url_for('static', filename='img/icons/icon-512x512.png', _external=True) }}">
     <meta property="og:url" content="{{ request.url }}">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocel_v2">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocel_v2">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocel_v2">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocel_v2">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocelll_v3">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocelll_v3">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocelll_v3">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocelll_v3">
     <!-- Google Fonts: Montserrat, Roboto y Roboto Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -372,9 +372,9 @@
 <div class="ticket">
     <div class="header">
         <h1 class="logo">
-            <span style="color: #111827; font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 2px;">Maripocel</span>
+            <span style="color: #111827; font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: 2px;">Maripocell</span>
         </h1>
-        <div class="subtitle-brand">MARIPOCEL - ACCESORIOS & TECNOLOGÍA</div>
+        <div class="subtitle-brand">MARIPOCELL - ACCESORIOS & TECNOLOGÍA</div>
         
         <p class="info">Folio / Ticket: #{{ venta.id }}</p>
         <p class="info">Expedido: {{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}</p>
@@ -447,7 +447,7 @@
     <div class="footer">
         <p style="font-size: 0.95rem; font-weight: bold; color: #000000; margin-bottom: 6px; font-family: 'Montserrat', sans-serif;">¡Gracias por tu compra!</p>
         <p style="margin-bottom: 4px;">Políticas de Tienda: Devoluciones únicamente presentando ticket impreso o digital.</p>
-        <p>Soporte: ventas@maripocel.com</p>
+        <p>Soporte: ventas@maripocell.com</p>
     </div>
 
     <a href="javascript:void(0);" onclick="volverACaja();" class="btn-return">
@@ -535,7 +535,7 @@
         try {
             const canvas = await generarCanvasTicket();
             const link = document.createElement('a');
-            link.download = `Factura_Maripocel_${SALE_ID}.png`;
+            link.download = `Factura_Maripocell_${SALE_ID}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         } catch (e) {
@@ -581,9 +581,9 @@
 
         let mensaje;
         if (nombre) {
-            mensaje = `Hola ${nombre}! Aquí tienes tu factura digital de Maripocel - Accesorios & Tecnología: ${enlaceRecibo}`;
+            mensaje = `Hola ${nombre}! Aquí tienes tu factura digital de Maripocell - Accesorios & Tecnología: ${enlaceRecibo}`;
         } else {
-            mensaje = `Hola! Aquí tienes tu factura digital de Maripocel - Accesorios & Tecnología: ${enlaceRecibo}`;
+            mensaje = `Hola! Aquí tienes tu factura digital de Maripocell - Accesorios & Tecnología: ${enlaceRecibo}`;
         }
 
         const url = `https://wa.me/${raw}?text=${encodeURIComponent(mensaje)}`;
@@ -592,7 +592,7 @@
     }
 
     // Texto limpio garantizado sin caracteres conflictivos
-    const mensajeTextoLimpio = `*MARIPOCEL - ACCESORIOS & TECNOLOGÍA*
+    const mensajeTextoLimpio = `*MARIPOCELL - ACCESORIOS & TECNOLOGÍA*
 *Folio / Ticket:* #{{ venta.id }}
 *Expedido:* {{ venta.fecha_venta.strftime('%d/%m/%Y %H:%M') }}
 *Cajero:* {{ venta.vendedor.nombre }}
@@ -609,9 +609,9 @@ _Desglose:_
 {% for pago in venta.pagos %}  * {{ pago.metodo_pago|capitalize }}: ${{ (pago.monto)|cop }}
 {% endfor %}
 {% endif %}
-Gracias por tu compra en Maripocel - Accesorios & Tecnología.
+Gracias por tu compra en Maripocell - Accesorios & Tecnología.
 Politicas: Devoluciones unicamente con ticket impreso o digital.
-Soporte: ventas@maripocel.com`;
+Soporte: ventas@maripocell.com`;
 
     function enviarWhatsAppSoloTexto() {
         const input = document.getElementById('waNumeroInput');

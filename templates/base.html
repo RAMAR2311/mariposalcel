@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Maripocel - Accesorios & Tecnología{% endblock %}</title>
+    <title>{% block title %}Maripocell - Accesorios & Tecnología{% endblock %}</title>
     <!-- Favicon y PWA Manifest -->
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocel_v2">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocel_v2">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocel_v2">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocel_v2">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocel_v2">
-    <link rel="manifest" href="/manifest.json?v=maripocel_v2">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}?v=maripocelll_v3">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/icons/favicon-32x32.png') }}?v=maripocelll_v3">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/icons/favicon-16x16.png') }}?v=maripocelll_v3">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/icons/apple-touch-icon.png') }}?v=maripocelll_v3">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocelll_v3">
+    <link rel="manifest" href="/manifest.json?v=maripocelll_v3">
     
     <!-- Meta tags PWA para Android, iOS y Navegadores Modernos -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Maripocel">
-    <meta name="application-name" content="Maripocel">
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocel_v2">
-    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=maripocel_v2">
+    <meta name="apple-mobile-web-app-title" content="Maripocell">
+    <meta name="application-name" content="Maripocell">
+    <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='img/icons/icon-192x192.png') }}?v=maripocelll_v3">
+    <link rel="apple-touch-icon" sizes="512x512" href="{{ url_for('static', filename='img/icons/icon-512x512.png') }}?v=maripocelll_v3">
     <meta name="theme-color" content="#D4AF37">
 
     <!-- Google Fonts: Montserrat, Poppins, Inter, Roboto -->
@@ -530,11 +530,11 @@
                 {% endif %}
             </div>
 
-            <!-- Columna Centro: Brand Logo (Maripocel) -->
+            <!-- Columna Centro: Brand Logo (Maripocell) -->
             <div class="d-flex justify-content-center flex-grow-1 px-1 px-sm-2 text-center overflow-hidden">
                 <a class="navbar-brand d-inline-flex align-items-center fw-bold m-0 text-nowrap" href="{{ url_for('index') }}" style="letter-spacing: 1.5px; font-size: clamp(1.3rem, 4vw, 1.7rem); font-family: var(--font-display);">
-                    <img src="{{ url_for('static', filename='img/Maripocel.png') }}" alt="Maripocel Logo" class="me-2 rounded-2" style="width: 38px; height: 38px; object-fit: contain;">
-                    <span style="color: #111827; font-weight: 900;">Maripocel</span>
+                    <img src="{{ url_for('static', filename='img/Maripocelll.png') }}" alt="Maripocell Logo" class="me-2 rounded-2" style="width: 38px; height: 38px; object-fit: contain;">
+                    <span style="color: #111827; font-weight: 900;">Maripocell</span>
                     <span class="navbar-brand-tech small ms-2 px-2 py-0 rounded" style="color: #926C09; font-size: 0.72rem; font-weight: 700; border: 1px solid rgba(212, 175, 55, 0.4); background-color: rgba(212, 175, 55, 0.08); letter-spacing: 1px;">ACCESORIOS & TECNOLOGÍA</span>
                 </a>
             </div>
@@ -1226,7 +1226,7 @@
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
-                        console.log('[PWA] El usuario aceptó la instalación de Maripocel');
+                        console.log('[PWA] El usuario aceptó la instalación de Maripocell');
                     }
                     deferredPrompt = null;
                     const container = document.getElementById('pwa-install-container');
@@ -1236,7 +1236,7 @@
         }
 
         window.addEventListener('appinstalled', () => {
-            console.log('[PWA] Maripocel fue instalada satisfactoriamente');
+            console.log('[PWA] Maripocell fue instalada satisfactoriamente');
             const container = document.getElementById('pwa-install-container');
             if (container) container.classList.add('d-none');
         });

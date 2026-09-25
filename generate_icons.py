@@ -4,9 +4,9 @@ import numpy as np
 
 def generate_all_icons(source_path=None):
     if source_path is None:
-        # Check standard paths
         potential_sources = [
-            'static/img/Maripocel_raw.png',
+            'static/img/Maripocell.png',
+            'static/img/Maripocell_wide.png',
             'static/img/Maripocel.png',
             'static/img/Mariposacel.png'
         ]
@@ -22,7 +22,6 @@ def generate_all_icons(source_path=None):
     img = Image.open(source_path).convert('RGBA')
     arr = np.array(img)
 
-    # Clean white background: if RGB is very close to white (all >= 250), ensure pure white
     rgb = arr[:, :, :3]
     mask_bg = np.all(rgb >= 250, axis=2)
     arr[mask_bg, 0] = 255
@@ -31,7 +30,6 @@ def generate_all_icons(source_path=None):
     arr[mask_bg, 3] = 255
     cleaned_img = Image.fromarray(arr)
 
-    # Content bounding box
     mask_fg = np.any(arr[:, :, :3] < 250, axis=2)
     coords = np.argwhere(mask_fg)
     if len(coords) > 0:
@@ -46,7 +44,6 @@ def generate_all_icons(source_path=None):
     else:
         cropped = cleaned_img
 
-    # Square canvas with padding for icons
     w, h = cropped.size
     max_dim = max(w, h)
     target_dim = int(max_dim / (1 - 2 * 0.08))
@@ -57,12 +54,11 @@ def generate_all_icons(source_path=None):
 
     os.makedirs("static/img/icons", exist_ok=True)
     
-    # Save standard logos
-    cropped.save("static/img/Maripocel_wide.png")
+    cropped.save("static/img/Maripocell_wide.png")
+    square_logo.save("static/img/Maripocell.png")
     square_logo.save("static/img/Maripocel.png")
     square_logo.save("static/img/Mariposacel.png")
 
-    # Generate icons
     square_logo.resize((512, 512), Image.Resampling.LANCZOS).save("static/img/icons/icon-512x512.png")
     square_logo.resize((192, 192), Image.Resampling.LANCZOS).save("static/img/icons/icon-192x192.png")
     square_logo.resize((180, 180), Image.Resampling.LANCZOS).save("static/img/icons/apple-touch-icon.png")
@@ -70,9 +66,8 @@ def generate_all_icons(source_path=None):
     square_logo.resize((32, 32), Image.Resampling.LANCZOS).save("static/img/icons/favicon-32x32.png")
     square_logo.resize((16, 16), Image.Resampling.LANCZOS).save("static/img/icons/favicon-16x16.png")
 
-    # Favicon ICO
     square_logo.save("static/favicon.ico", format='ICO', sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
-    print("Iconos PWA e Isotipo Maripocel generados con éxito.")
+    print("Iconos PWA e Isotipo Maripocell generados con éxito.")
 
 if __name__ == "__main__":
     generate_all_icons()

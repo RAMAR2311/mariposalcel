@@ -1,4 +1,4 @@
-const CACHE_NAME = 'maripocel-pwa-v2';
+const CACHE_NAME = 'maripocelll-pwa-v3';
 
 const PRECACHE_ASSETS = [
     '/',

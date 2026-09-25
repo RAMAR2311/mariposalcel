@@ -1,8 +1,8 @@
 {
     "id": "/",
-    "name": "Maripocel - Accesorios & Tecnología",
-    "short_name": "Maripocel",
-    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas Maripocel - Accesorios & Tecnología",
+    "name": "Maripocell - Accesorios & Tecnología",
+    "short_name": "Maripocell",
+    "description": "Sistema integral de gestión de inventario, punto de venta y finanzas Maripocell - Accesorios & Tecnología",
     "start_url": "/?source=pwa",
     "scope": "/",
     "display": "standalone",
@@ -16,25 +16,25 @@
     ],
     "icons": [
         {
-            "src": "/static/img/icons/icon-192x192.png?v=maripocel_v2",
+            "src": "/static/img/icons/icon-192x192.png?v=maripocelll_v3",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/static/img/icons/icon-192x192.png?v=maripocel_v2",
+            "src": "/static/img/icons/icon-192x192.png?v=maripocelll_v3",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "maskable"
         },
         {
-            "src": "/static/img/icons/icon-512x512.png?v=maripocel_v2",
+            "src": "/static/img/icons/icon-512x512.png?v=maripocelll_v3",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/static/img/icons/icon-512x512.png?v=maripocel_v2",
+            "src": "/static/img/icons/icon-512x512.png?v=maripocelll_v3",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
@@ -46,14 +46,14 @@
             "short_name": "Caja",
             "description": "Registrar venta en caja",
             "url": "/sales/caja_visual",
-            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=maripocel_v2", "sizes": "192x192" }]
+            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=maripocelll_v3", "sizes": "192x192" }]
         },
         {
             "name": "Arqueo de Caja",
             "short_name": "Arqueo",
             "description": "Consultar o realizar arqueo de caja",
             "url": "/arqueo/nuevo",
-            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=maripocel_v2", "sizes": "192x192" }]
+            "icons": [{ "src": "/static/img/icons/icon-192x192.png?v=maripocelll_v3", "sizes": "192x192" }]
         }
     ]
 }
