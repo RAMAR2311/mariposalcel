@@ -185,6 +185,7 @@
 
                 <!-- Formulario de Subida -->
                 <form id="formCambiarFoto" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input type="hidden" name="q" value="{{ q }}">
                     <input type="hidden" name="foto" value="{{ filtro_foto }}">
                     <div class="mb-3">
@@ -202,6 +203,7 @@
                 
                 <!-- Botón para Quitar Foto -->
                 <form id="formEliminarFoto" method="POST" class="mt-2 text-center" style="display: none;" onsubmit="return confirm('¿Seguro que deseas quitar la foto actual de este producto?');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input type="hidden" name="q" value="{{ q }}">
                     <input type="hidden" name="foto" value="{{ filtro_foto }}">
                     <button type="submit" class="btn btn-link text-danger btn-sm text-decoration-none">
