@@ -20,7 +20,7 @@ def index():
     q = request.args.get('q', '').strip()
     per_page = 20
 
-    base_query = Product.query.filter_by(tipo_inventario=tipo)
+    base_query = Product.query.filter_by(tipo_inventario=tipo, activo=True)
     if q:
         from sqlalchemy import or_
         base_query = base_query.filter(
@@ -39,8 +39,8 @@ def index():
     productos = paginacion.items
 
     # --- KPIs de Inventario ---
-    # Se calcula sobre TODO el inventario (no solo la página actual)
-    todos = Product.query.filter_by(tipo_inventario=tipo).all()
+    # Se calcula sobre TODO el inventario activo (no solo la página actual)
+    todos = Product.query.filter_by(tipo_inventario=tipo, activo=True).all()
     total_productos = len(todos)
 
     valor_costo = 0.0
@@ -114,7 +114,7 @@ def nuevo():
             flash('Debes ingresar un código SKU para el producto.', 'warning')
             return render_template('inventory/form.html')
 
-        prod_existente = Product.query.filter_by(sku=sku_candidato).first()
+        prod_existente = Product.query.filter_by(sku=sku_candidato, activo=True).first()
         if prod_existente:
             flash(f'El código SKU "{sku_candidato}" ya existe en el inventario (pertenece a "{prod_existente.nombre}"). Cada producto debe tener un SKU único.', 'warning')
             return render_template('inventory/form.html')
@@ -332,34 +332,21 @@ def eliminar_producto(id):
     if producto.tipo_inventario != tipo:
         abort(403)
         
-    from models import SaleDetail, Maneo, FacturaBodegaDetalle
-    
-    # 1. Validación de seguridad en cascada (No eliminar lo que tiene historia financiera/logística)
-    if SaleDetail.query.filter_by(product_id=producto.id).first():
-        flash('Acción denegada: El producto ya está vinculado a Historial de Ventas. Sugerencia: Ajustar stock a 0.', 'warning')
-        return redirect(url_for('inventory_bp.index'))
-        
-    if Maneo.query.filter_by(product_id=producto.id).first():
-        flash('Acción denegada: El producto tiene registros históticos en Maneos (Préstamos).', 'warning')
-        return redirect(url_for('inventory_bp.index'))
-        
-    if FacturaBodegaDetalle.query.filter_by(producto_id=producto.id).first():
-        flash('Acción denegada: El producto forma parte del detalle de una Factura Asignada.', 'warning')
-        return redirect(url_for('inventory_bp.index'))
-        
+    nombre = producto.nombre
     try:
-        # 2. Purgar dependencias suaves (Ajustes de Kardex)
-        for ajuste in producto.ajustes_stock:
-            db.session.delete(ajuste)
+        # 1. Liberar el código SKU agregando sufijo para que el cliente pueda volver a usarlo en otro producto
+        if not producto.sku.endswith(f"_arch_{producto.id}"):
+            producto.sku = f"{producto.sku}_arch_{producto.id}"
             
-        # 3. Eliminar el producto madre (las Variantes se van automáticamente por regla delete-orphan de SQLAlchemy)
-        nombre = producto.nombre
-        db.session.delete(producto)
+        # 2. Borrado Lógico: Marcar como inactivo
+        # El producto desaparece del inventario visible y de la caja POS, pero todas sus ventas pasadas,
+        # facturas, arqueos y reportes anteriores quedan 100% íntegros y legibles.
+        producto.activo = False
         db.session.commit()
-        flash(f'Producto "{nombre}" fue borrado permanentemente del inventario.', 'success')
+        flash(f'Producto "{nombre}" fue eliminado del catálogo. Las ventas pasadas y reportes se conservan intactos.', 'success')
     except Exception as e:
         db.session.rollback()
-        flash(f'Ocurrió un error bloqueante en la base de datos: {str(e)}', 'danger')
+        flash(f'Ocurrió un error al eliminar el producto: {str(e)}', 'danger')
         
     return redirect(url_for('inventory_bp.index'))
 
@@ -766,7 +753,7 @@ def api_search():
         return jsonify([])
     
     from sqlalchemy import or_
-    productos = Product.query.filter_by(tipo_inventario=tipo).filter(
+    productos = Product.query.filter_by(tipo_inventario=tipo, activo=True).filter(
         or_(
             Product.sku.ilike(f'%{query}%'),
             Product.nombre.ilike(f'%{query}%'),

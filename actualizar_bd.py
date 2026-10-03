@@ -7,43 +7,48 @@ def main():
         # 1. Asegurar creación de tablas si faltara alguna (ej. providers)
         db.create_all()
 
-        # 2. Columnas añadidas a los modelos que necesitan existir en PostgreSQL
-        columnas = [
-            # Tabla maneos
-            "ALTER TABLE maneos ADD COLUMN IF NOT EXISTS valor_fijo NUMERIC(10, 2);",
-            "ALTER TABLE maneos ADD COLUMN IF NOT EXISTS variant_id INTEGER;",
-            "ALTER TABLE maneos ADD COLUMN IF NOT EXISTS cliente_id INTEGER;",
-            # Tabla product_variants (precios específicos para subcategorías)
-            "ALTER TABLE product_variants ADD COLUMN IF NOT EXISTS precio_costo NUMERIC(10, 2);",
-            "ALTER TABLE product_variants ADD COLUMN IF NOT EXISTS precio_minimo NUMERIC(10, 2);",
-            "ALTER TABLE product_variants ADD COLUMN IF NOT EXISTS precio_sugerido NUMERIC(10, 2);",
-            # Tabla users
-            "ALTER TABLE users ADD COLUMN IF NOT EXISTS telefono VARCHAR(20);",
-            # Tabla sale_details
-            "ALTER TABLE sale_details ADD COLUMN IF NOT EXISTS variant_id INTEGER;",
-            "ALTER TABLE sale_details ADD COLUMN IF NOT EXISTS nombre_manual VARCHAR(200);",
-            "ALTER TABLE sale_details ADD COLUMN IF NOT EXISTS precio_costo_manual NUMERIC(10, 2);",
-            # Tabla facturas_bodega_detalles
-            "ALTER TABLE facturas_bodega_detalles ADD COLUMN IF NOT EXISTS variant_id INTEGER;",
-            "ALTER TABLE facturas_bodega_detalles ADD COLUMN IF NOT EXISTS precio_venta NUMERIC(10, 2);",
-            # Tabla clientes
-            "ALTER TABLE clientes ADD COLUMN IF NOT EXISTS creado_por_id INTEGER;",
-            "ALTER TABLE clientes ADD COLUMN IF NOT EXISTS contacto_persona VARCHAR(100);",
-            "ALTER TABLE clientes ADD COLUMN IF NOT EXISTS local_numero VARCHAR(50);",
-            "ALTER TABLE clientes ADD COLUMN IF NOT EXISTS notas TEXT;",
-            "ALTER TABLE clientes ALTER COLUMN documento_o_nit DROP NOT NULL;",
-            "ALTER TABLE clientes ALTER COLUMN telefono DROP NOT NULL;",
-            # Tabla price_approvals
-            "ALTER TABLE price_approvals ADD COLUMN IF NOT EXISTS sale_id INTEGER;",
+        # 2. Columnas añadidas a los modelos (compatible con PostgreSQL y SQLite)
+        is_sqlite = db.engine.url.drivername.startswith('sqlite')
+        
+        columnas_pg = [
+            ("products", "activo", "BOOLEAN DEFAULT TRUE"),
+            ("maneos", "valor_fijo", "NUMERIC(10, 2)"),
+            ("maneos", "variant_id", "INTEGER"),
+            ("maneos", "cliente_id", "INTEGER"),
+            ("product_variants", "precio_costo", "NUMERIC(10, 2)"),
+            ("product_variants", "precio_minimo", "NUMERIC(10, 2)"),
+            ("product_variants", "precio_sugerido", "NUMERIC(10, 2)"),
+            ("users", "telefono", "VARCHAR(20)"),
+            ("sale_details", "variant_id", "INTEGER"),
+            ("sale_details", "nombre_manual", "VARCHAR(200)"),
+            ("sale_details", "precio_costo_manual", "NUMERIC(10, 2)"),
+            ("facturas_bodega_detalles", "variant_id", "INTEGER"),
+            ("facturas_bodega_detalles", "precio_venta", "NUMERIC(10, 2)"),
+            ("clientes", "creado_por_id", "INTEGER"),
+            ("clientes", "contacto_persona", "VARCHAR(100)"),
+            ("clientes", "local_numero", "VARCHAR(50)"),
+            ("clientes", "notas", "TEXT"),
+            ("price_approvals", "sale_id", "INTEGER"),
         ]
 
-        for sql in columnas:
+        for tabla, col, tipo in columnas_pg:
             try:
-                db.session.execute(db.text(sql))
+                if is_sqlite:
+                    db.session.execute(db.text(f"ALTER TABLE {tabla} ADD COLUMN {col} {tipo};"))
+                else:
+                    db.session.execute(db.text(f"ALTER TABLE {tabla} ADD COLUMN IF NOT EXISTS {col} {tipo};"))
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()
-                print(f"[Aviso] {sql} -> {e}")
+                # Si ya existe la columna en SQLite, se ignora limpiamente
+                if "duplicate column" not in str(e).lower():
+                    pass
+
+        try:
+            db.session.execute(db.text("UPDATE products SET activo = 1 WHERE activo IS NULL;"))
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
 
         # 3. Ajustar valores antiguos registrados con números abreviados (ej: 30 -> 30000)
         try:
